@@ -1,11 +1,11 @@
 {
-  "name": "QuranDailyApp",
-  "short_name": "QuranDailyApp",
+  "name": "Quran Daily",
+  "short_name": "QuranDaily",
   "id": "./",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#03173d",
+  "theme_color": "#2c3e50",
   "prefer_related_applications": false,
   "icons": [
     {

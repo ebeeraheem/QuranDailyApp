@@ -36,9 +36,9 @@ public class QuranService(IMemoryCache cache, HttpClient httpClient, ILogger<Qur
             return [];
 
         _allAyahs = [];
-        foreach (var chapter in quranData.Chapters)
+        foreach (var chapter in quranData.Chapters.Select(chapter => chapter.Value))
         {
-            foreach (var ayah in chapter.Verses)
+            foreach (var ayah in chapter.Verses.Select(ayah => ayah.Value))
             {
                 _allAyahs.Add(new AyahDisplay
                 {

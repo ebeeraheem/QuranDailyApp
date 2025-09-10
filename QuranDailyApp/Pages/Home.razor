@@ -1,7 +1,51 @@
 ﻿@page "/"
+@using QuranDailyApp.Models
+@using QuranDailyApp.Services
+@inject QuranService QuranService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Quran Daily</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="container text-center mt-5">
+    <h1 class="display-4 mb-4">Quran Ayah of the Day</h1>
 
-Welcome to your new app.
+    @if (currentAyah is not null)
+    {
+        <div class="card bg-light mb-4" style="max-width: 800px; margin: 0 auto;">
+            <div class="card-body p-4">
+                <h3 class="card-title">
+                    Surah @currentAyah.SurahName (@currentAyah.SurahNumber) - Ayah @currentAyah.AyahNumber
+                </h3>
+                <div class="arabic-text fs-3 fw-bold mb-3 text-center" dir="rtl">
+                    @((MarkupString)currentAyah.Arabic)
+                </div>
+                <div class="transliteration mb-3 fs-5 italic">
+                    @currentAyah.Transliteration
+                </div>
+                <div class="translation mb-3 fs-6">
+                    <strong>Translation (Sahih International):</strong> @currentAyah.Translation
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" @onclick="LoadNewRandomAyah">Get New Random Ayah</button>
+    }
+    else
+    {
+        <p class="text-muted">Loading...</p>
+    }
+</div>
+
+@code {
+    private AyahDisplay? currentAyah;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentAyah = await QuranService.GetDailyAyahAsync();
+    }
+
+    private async Task LoadNewRandomAyah()
+    {
+        currentAyah = await QuranService.GetRandomAyahAsync();
+        StateHasChanged();
+    }
+}
