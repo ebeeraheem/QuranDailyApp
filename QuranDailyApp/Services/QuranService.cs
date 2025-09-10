@@ -61,9 +61,10 @@ public class QuranService(IMemoryCache cache, HttpClient httpClient, ILogger<Qur
         if (allAyahs.Count == 0)
             return new AyahDisplay { Arabic = "Error loading Quran data." };
 
-        var dayOfYear = DateTime.Now.DayOfYear;
-        var rng = new Random(dayOfYear); // Deterministic seed for same ayah each day
-        var index = rng.Next(allAyahs.Count);
+        var today = DateTime.UtcNow.Date;
+        var daysSinceEpoch = (today - new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Days;
+
+        var index = daysSinceEpoch % allAyahs.Count;
         return allAyahs[index];
     }
 
@@ -76,5 +77,37 @@ public class QuranService(IMemoryCache cache, HttpClient httpClient, ILogger<Qur
         var rng = new Random(); // Truly random
         var index = rng.Next(allAyahs.Count);
         return allAyahs[index];
+    }
+
+    public async Task<AyahDisplay> GetNextAyah(AyahDisplay currentAyah)
+    {
+        var allAyahs = await GetAllAyahsAsync();
+        if (allAyahs.Count == 0)
+            return new AyahDisplay { Arabic = "Error loading Quran data." };
+
+        var currentIndex = allAyahs.FindIndex(a =>
+        a.SurahNumber == currentAyah.SurahNumber &&
+        a.AyahNumber == currentAyah.AyahNumber);
+
+        if (currentIndex == -1 || currentIndex + 1 >= allAyahs.Count)
+            return allAyahs[0]; // Wrap around to first ayah
+
+        return allAyahs[currentIndex + 1];
+    }
+
+    public async Task<AyahDisplay> GetPreviousAyah(AyahDisplay currentAyah)
+    {
+        var allAyahs = await GetAllAyahsAsync();
+        if (allAyahs.Count == 0)
+            return new AyahDisplay { Arabic = "Error loading Quran data." };
+
+        var currentIndex = allAyahs.FindIndex(a =>
+        a.SurahNumber == currentAyah.SurahNumber &&
+        a.AyahNumber == currentAyah.AyahNumber);
+
+        if (currentIndex <= 0)
+            return allAyahs[^1]; // Wrap around to last ayah
+
+        return allAyahs[currentIndex - 1];
     }
 }
