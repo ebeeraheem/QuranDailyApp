@@ -2,50 +2,235 @@
 @using QuranDailyApp.Models
 @using QuranDailyApp.Services
 @inject QuranService QuranService
+@inject IJSRuntime JSRuntime
 
-<PageTitle>Quran Daily</PageTitle>
+<PageTitle>Quran Daily - Daily Verses from the Holy Quran</PageTitle>
 
-<div class="container text-center mt-5">
-    <h1 class="display-4 mb-4">Quran Ayah of the Day</h1>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8">
 
-    @if (currentAyah is not null)
-    {
-        <div class="card bg-light mb-4" style="max-width: 800px; margin: 0 auto;">
-            <div class="card-body p-4">
-                <h3 class="card-title">
-                    Surah @currentAyah.SurahName (@currentAyah.SurahNumber) - Ayah @currentAyah.AyahNumber
-                </h3>
-                <div class="arabic-text fs-3 fw-bold mb-3 text-center" dir="rtl">
-                    @((MarkupString)currentAyah.Arabic)
+            <!-- Header -->
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold mb-2" style="color: var(--primary-color);">
+                    📖 Daily Quran Verse
+                </h1>
+                <p class="lead text-muted">
+                    @GetCurrentDateFormatted()
+                </p>
+            </div>
+
+            @if (currentAyah is not null)
+            {
+                <!-- Main Ayah Card -->
+                <div class="card card-elevated mb-4">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Surah Info -->
+                        <div class="text-center mb-4">
+                            <div class="badge bg-primary fs-6 px-3 py-2 rounded-pill">
+                                Surah @currentAyah.SurahName (@currentAyah.SurahNumber) - Ayah @((int)currentAyah.AyahNumber)
+                            </div>
+                        </div>
+
+                        <!-- Arabic Text -->
+                        <div class="arabic-text">
+                            @((MarkupString)currentAyah.Arabic)
+                        </div>
+
+                        <!-- Transliteration -->
+                        @if (!string.IsNullOrWhiteSpace(currentAyah.Transliteration))
+                        {
+                            <div class="transliteration text-center">
+                                <em>@currentAyah.Transliteration</em>
+                            </div>
+                        }
+
+                        <!-- Translation -->
+                        <div class="translation text-center mt-4">
+                            <div class="border-start border-primary border-3 ps-3 d-inline-block">
+                                <strong class="text-muted small d-block mb-1">Translation (Sahih International)</strong>
+                                <span class="fs-5">@currentAyah.Translation</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="transliteration mb-3 fs-5 italic">
-                    @currentAyah.Transliteration
+
+                <!-- Navigation Controls -->
+                <div class="ayah-controls">
+                    <button class="btn btn-outline-primary control-button" @onclick="LoadPreviousAyah" disabled="@isLoading">
+                        @if (isLoading && currentAction == "previous")
+                        {
+                            <div class="loading-spinner"></div>
+                        }
+                        else
+                        {
+                            <span>⬅️</span>
+                        }
+                        <span>Previous</span>
+                    </button>
+
+                    <button class="btn btn-primary control-button" @onclick="LoadDailyAyah" disabled="@isLoading">
+                        @if (isLoading && currentAction == "daily")
+                        {
+                            <div class="loading-spinner"></div>
+                        }
+                        else
+                        {
+                            <span>📅</span>
+                        }
+                        <span>Daily</span>
+                    </button>
+
+                    <button class="btn btn-outline-primary control-button" @onclick="LoadRandomAyah" disabled="@isLoading">
+                        @if (isLoading && currentAction == "random")
+                        {
+                            <div class="loading-spinner"></div>
+                        }
+                        else
+                        {
+                            <span>🎲</span>
+                        }
+                        <span>Random</span>
+                    </button>
+
+                    <button class="btn btn-outline-primary control-button" @onclick="LoadNextAyah" disabled="@isLoading">
+                        @if (isLoading && currentAction == "next")
+                        {
+                            <div class="loading-spinner"></div>
+                        }
+                        else
+                        {
+                            <span>➡️</span>
+                        }
+                        <span>Next</span>
+                    </button>
                 </div>
-                <div class="translation mb-3 fs-6">
-                    <strong>Translation (Sahih International):</strong> @currentAyah.Translation
+
+                <!-- Additional Actions -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-link" @onclick="ShareAyah" title="Share this verse">
+                        📤 Share
+                    </button>
                 </div>
+
+            }
+            else
+            {
+                <!-- Loading State -->
+                <div class="text-center py-5">
+                    <div class="loading-spinner mb-3" style="width: 3rem; height: 3rem;"></div>
+                    <p class="text-muted">Loading today's verse...</p>
+                </div>
+            }
+
+            <!-- Footer -->
+            <div class="text-center mt-5 pt-4 border-top">
+                <small class="text-muted">
+                    May Allah bless you with guidance and peace 🤲
+                </small>
             </div>
         </div>
-
-        <button class="btn btn-primary" @onclick="LoadNewRandomAyah">Get New Random Ayah</button>
-    }
-    else
-    {
-        <p class="text-muted">Loading...</p>
-    }
+    </div>
 </div>
 
 @code {
     private AyahDisplay? currentAyah;
+    private bool isLoading = false;
+    private string currentAction = "";
 
     protected override async Task OnInitializedAsync()
     {
-        currentAyah = await QuranService.GetDailyAyahAsync();
+        await LoadDailyAyah();
     }
 
-    private async Task LoadNewRandomAyah()
+    private async Task LoadDailyAyah()
     {
-        currentAyah = await QuranService.GetRandomAyahAsync();
+        await PerformAction("daily", async () =>
+        {
+            currentAyah = await QuranService.GetDailyAyahAsync();
+        });
+    }
+
+    private async Task LoadRandomAyah()
+    {
+        await PerformAction("random", async () =>
+        {
+            currentAyah = await QuranService.GetRandomAyahAsync();
+        });
+    }
+
+    private async Task LoadNextAyah()
+    {
+        if (currentAyah == null) return;
+
+        await PerformAction("next", async () =>
+        {
+            currentAyah = await QuranService.GetNextAyah(currentAyah);
+        });
+    }
+
+    private async Task LoadPreviousAyah()
+    {
+        if (currentAyah == null) return;
+
+        await PerformAction("previous", async () =>
+        {
+            currentAyah = await QuranService.GetPreviousAyah(currentAyah);
+        });
+    }
+
+    private async Task PerformAction(string action, Func<Task> actionFunc)
+    {
+        if (isLoading) return;
+
+        isLoading = true;
+        currentAction = action;
         StateHasChanged();
+
+        try
+        {
+            await actionFunc();
+        }
+        catch (Exception ex)
+        {
+            // Handle error appropriately
+            Console.WriteLine($"Error performing action {action}: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+            currentAction = "";
+            StateHasChanged();
+        }
+    }
+
+    private string GetCurrentDateFormatted()
+    {
+        return DateTime.Now.ToString("dddd, MMMM dd, yyyy");
+    }
+
+    private async Task ShareAyah()
+    {
+        if (currentAyah == null) return;
+
+        var shareText = $"📖 {currentAyah.Arabic}\n\n" +
+                       $"\"{currentAyah.Translation}\"\n\n" +
+                       $"- Quran {currentAyah.SurahNumber}:{currentAyah.AyahNumber} ({currentAyah.SurahName})";
+
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("navigator.share", new
+            {
+                title = "Quran Daily Verse",
+                text = shareText,
+                url = ""
+            });
+        }
+        catch
+        {
+            // Fallback: copy to clipboard
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", shareText);
+            // You might want to show a toast notification here
+        }
     }
 }

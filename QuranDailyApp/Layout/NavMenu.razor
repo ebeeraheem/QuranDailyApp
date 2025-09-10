@@ -1,6 +1,10 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject IJSRuntime JSRuntime
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">QuranDailyApp</a>
+        <a class="navbar-brand" href="">
+            <span style="font-weight: 600;">📖 Quran Daily</span>
+        </a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,21 +15,73 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <span class="nav-icon">🏠</span> Daily Ayah
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
+
+        <div class="nav-item px-3 mt-3">
+            <div class="nav-section-title">Theme</div>
+            <div class="theme-selector">
+                <button class="theme-option active" data-theme-option="system" @onclick="() => SetSystemTheme()">
+                    🌓 System
+                </button>
+                <button class="theme-option" data-theme-option="light" @onclick="() => SetLightTheme()">
+                    ☀️ Light
+                </button>
+                <button class="theme-option" data-theme-option="dark" @onclick="() => SetDarkTheme()">
+                    🌙 Dark
+                </button>
+            </div>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
+
+        <div class="nav-item px-3 mt-3">
+            <button class="btn btn-outline-primary w-100" @onclick="ShowInstallPrompt">
+                <span class="nav-icon">📱</span> Install App
+            </button>
+        </div>
+
+        <div class="nav-footer px-3 mt-auto">
+            <small class="text-muted">
+                Daily verses from the Holy Quran
+            </small>
         </div>
     </nav>
 </div>
+
+<style>
+    .nav-icon {
+        margin-right: 0.5rem;
+    }
+
+    .nav-section-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-footer {
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 1rem;
+    }
+
+    .theme-selector {
+        flex-direction: column;
+        gap: 0.25rem;
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+
+        .theme-selector .theme-option {
+            width: 100%;
+            text-align: left;
+            justify-content: flex-start;
+        }
+</style>
 
 @code {
     private bool collapseNavMenu = true;
@@ -35,5 +91,25 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async Task SetDarkTheme()
+    {
+        await JSRuntime.InvokeVoidAsync("setTheme", "dark");
+    }
+
+    private async Task SetLightTheme()
+    {
+        await JSRuntime.InvokeVoidAsync("setTheme", "light");
+    }
+
+    private async Task SetSystemTheme()
+    {
+        await JSRuntime.InvokeVoidAsync("setTheme", "system");
+    }
+
+    private async Task ShowInstallPrompt()
+    {
+        await JSRuntime.InvokeVoidAsync("showInstallPrompt");
     }
 }
