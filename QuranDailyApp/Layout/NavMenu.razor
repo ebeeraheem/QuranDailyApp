@@ -1,110 +1,393 @@
 ﻿@inject IJSRuntime JSRuntime
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">
-            <span style="font-weight: 600;">📖 Quran Daily</span>
-        </a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
+<nav class="nav-container">
+    <div class="nav-header">
+        <div class="nav-brand">
+            <h1 class="brand-title">Quran Daily</h1>
+            <p class="brand-subtitle">Daily Guidance</p>
+        </div>
+        <button class="nav-toggle" @onclick="ToggleNavMenu" aria-label="Toggle navigation">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
         </button>
     </div>
-</div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="nav-icon">🏠</span> Daily Ayah
-            </NavLink>
-        </div>
+    <div class="nav-overlay @(collapseNavMenu ? "" : "active")" @onclick="ToggleNavMenu"></div>
 
-        <div class="nav-item px-3 mt-3">
-            <div class="nav-section-title">Theme</div>
-            <div class="theme-selector">
-                <button class="theme-option active" data-theme-option="system" @onclick="() => SetSystemTheme()">
-                    🌓 System
-                </button>
-                <button class="theme-option" data-theme-option="light" @onclick="() => SetLightTheme()">
-                    ☀️ Light
-                </button>
-                <button class="theme-option" data-theme-option="dark" @onclick="() => SetDarkTheme()">
-                    🌙 Dark
+    <div class="nav-menu @(collapseNavMenu ? "" : "active")">
+        <div class="nav-content">
+            <!-- Navigation Links -->
+            <div class="nav-section">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="ToggleNavMenu">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9,22 9,12 15,12 15,22" />
+                    </svg>
+                    <span>Daily Verse</span>
+                </NavLink>
+            </div>
+
+            <!-- Theme Section -->
+            <div class="nav-section">
+                <h3 class="section-title">Appearance</h3>
+                <div class="theme-controls">
+                    <button class="theme-button @(GetThemeClass("system"))"
+                            @onclick="() => SetSystemTheme()"
+                            data-theme="system">
+                        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 1v6m0 6v6m11-5h-6m-6 0H1m15.5-8.5l-4.2 4.2m-6.4 0L1.5 6.5m13 11l-4.2-4.2m-6.4 0L1.5 17.5" />
+                        </svg>
+                        <span>Auto</span>
+                    </button>
+                    <button class="theme-button @(GetThemeClass("light"))"
+                            @onclick="() => SetLightTheme()"
+                            data-theme="light">
+                        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                        </svg>
+                        <span>Light</span>
+                    </button>
+                    <button class="theme-button @(GetThemeClass("dark"))"
+                            @onclick="() => SetDarkTheme()"
+                            data-theme="dark">
+                        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                        <span>Dark</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Install App -->
+            <div class="nav-section">
+                <button class="install-button" @onclick="ShowInstallPrompt">
+                    <svg class="install-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7,10 12,15 17,10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <div class="install-content">
+                        <span class="install-title">Install App</span>
+                        <small class="install-subtitle">Access offline</small>
+                    </div>
                 </button>
             </div>
         </div>
 
-        <div class="nav-item px-3 mt-3">
-            <button class="btn btn-outline-primary w-100" @onclick="ShowInstallPrompt">
-                <span class="nav-icon">📱</span> Install App
-            </button>
-        </div>
-
-        <div class="nav-footer px-3 mt-auto">
-            <small class="text-muted">
+        <!-- Footer -->
+        <div class="nav-footer">
+            <p class="footer-text">
                 Daily verses from the Holy Quran
+            </p>
+            <div class="footer-divider"></div>
+            <small class="footer-copyright">
+                © 2024 Quran Daily
             </small>
         </div>
-    </nav>
-</div>
+    </div>
+</nav>
 
 <style>
-    .nav-icon {
-        margin-right: 0.5rem;
+    .nav-container {
+        position: relative;
+        z-index: 1000;
     }
 
-    .nav-section-title {
+    .nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+        background: var(--nav-bg);
+        color: var(--nav-text);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-brand {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .brand-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--nav-text);
+    }
+
+    .brand-subtitle {
         font-size: 0.75rem;
+        margin: 0;
+        opacity: 0.8;
+        color: var(--nav-text);
+    }
+
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: none;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+
+        .nav-toggle:hover {
+            background-color: var(--nav-hover);
+        }
+
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background-color: var(--nav-text);
+        transition: all 0.3s ease;
+    }
+
+    .nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 280px;
+        background-color: var(--bg-card);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+        .nav-menu.active {
+            transform: translateX(0);
+        }
+
+    .nav-content {
+        flex: 1;
+        padding: 5rem 0 1rem 0;
+        overflow-y: auto;
+    }
+
+    .nav-section {
+        padding: 0 1.5rem 2rem 1.5rem;
+    }
+
+        .nav-section:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+    .section-title {
+        font-size: 0.875rem;
         font-weight: 600;
+        color: var(--text-secondary);
+        margin: 0 0 1rem 0;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        color: var(--text-secondary);
-        margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem 1rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+
+        .nav-link:hover {
+            background-color: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+    .nav-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .theme-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .theme-button {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        background: none;
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.875rem;
+    }
+
+        .theme-button:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .theme-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+    .theme-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .install-button {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        font-size: 0.875rem;
+    }
+
+        .install-button:hover {
+            transform: translateY(-1px);
+        }
+
+    .install-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .install-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .install-title {
+        font-weight: 600;
+    }
+
+    .install-subtitle {
+        opacity: 0.9;
     }
 
     .nav-footer {
-        padding-top: 1rem;
+        padding: 1.5rem;
         border-top: 1px solid var(--border-color);
-        margin-top: 1rem;
+        text-align: center;
     }
 
-    .theme-selector {
-        flex-direction: column;
-        gap: 0.25rem;
-        background: transparent;
-        border: none;
-        padding: 0;
+    .footer-text {
+        margin: 0 0 0.5rem 0;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
     }
 
-        .theme-selector .theme-option {
-            width: 100%;
-            text-align: left;
-            justify-content: flex-start;
-        }
+    .footer-divider {
+        height: 1px;
+        background-color: var(--border-color);
+        margin: 0.75rem 0;
+    }
+
+    .footer-copyright {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+    }
+
+    @@media (min-width: 768px) {
+        .nav-header
+
+    {
+        display: none;
+    }
+
+    .nav-menu {
+        position: static;
+        transform: none;
+        width: 280px;
+        height: 100vh;
+        box-shadow: none;
+        border-right: 1px solid var(--border-color);
+    }
+
+    .nav-content {
+        padding-top: 2rem;
+    }
+
+    .nav-overlay {
+        display: none;
+    }
+
+    }
 </style>
 
 @code {
     private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string currentTheme = "system";
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 
+    private string GetThemeClass(string theme)
+    {
+        return currentTheme == theme ? "active" : "";
+    }
+
     private async Task SetDarkTheme()
     {
+        currentTheme = "dark";
         await JSRuntime.InvokeVoidAsync("setTheme", "dark");
     }
 
     private async Task SetLightTheme()
     {
+        currentTheme = "light";
         await JSRuntime.InvokeVoidAsync("setTheme", "light");
     }
 
     private async Task SetSystemTheme()
     {
+        currentTheme = "system";
         await JSRuntime.InvokeVoidAsync("setTheme", "system");
     }
 

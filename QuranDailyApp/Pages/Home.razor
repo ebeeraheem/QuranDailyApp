@@ -6,132 +6,446 @@
 
 <PageTitle>Quran Daily - Daily Verses from the Holy Quran</PageTitle>
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-10 col-xl-8">
+<div class="home-container">
+    <!-- Header Section -->
+    <header class="page-header">
+        <h1 class="page-title">Daily Verse</h1>
+        <p class="page-date">@GetCurrentDateFormatted()</p>
+    </header>
 
-            <!-- Header -->
-            <div class="text-center mb-4">
-                <h1 class="display-5 fw-bold mb-2" style="color: var(--primary-color);">
-                    📖 Daily Quran Verse
-                </h1>
-                <p class="lead text-muted">
-                    @GetCurrentDateFormatted()
-                </p>
+    @if (currentAyah is not null)
+    {
+        <!-- Main Verse Card -->
+        <article class="verse-card">
+            <!-- Surah Information -->
+            <div class="verse-header">
+                <div class="surah-badge">
+                    <span class="surah-name">@currentAyah.SurahName</span>
+                    <span class="surah-reference">@currentAyah.SurahNumber:@((int)currentAyah.AyahNumber)</span>
+                </div>
             </div>
 
-            @if (currentAyah is not null)
+            <!-- Arabic Text -->
+            <div class="arabic-verse">
+                @((MarkupString)currentAyah.Arabic)
+            </div>
+
+            <!-- Transliteration -->
+            @if (!string.IsNullOrWhiteSpace(currentAyah.Transliteration))
             {
-                <!-- Main Ayah Card -->
-                <div class="card card-elevated mb-4">
-                    <div class="card-body p-4 p-md-5">
-                        <!-- Surah Info -->
-                        <div class="text-center mb-4">
-                            <div class="badge bg-primary fs-6 px-3 py-2 rounded-pill">
-                                Surah @currentAyah.SurahName (@currentAyah.SurahNumber) - Ayah @((int)currentAyah.AyahNumber)
-                            </div>
-                        </div>
-
-                        <!-- Arabic Text -->
-                        <div class="arabic-text">
-                            @((MarkupString)currentAyah.Arabic)
-                        </div>
-
-                        <!-- Transliteration -->
-                        @if (!string.IsNullOrWhiteSpace(currentAyah.Transliteration))
-                        {
-                            <div class="transliteration text-center">
-                                <em>@currentAyah.Transliteration</em>
-                            </div>
-                        }
-
-                        <!-- Translation -->
-                        <div class="translation text-center mt-4">
-                            <div class="border-start border-primary border-3 ps-3 d-inline-block">
-                                <strong class="text-muted small d-block mb-1">Translation (Sahih International)</strong>
-                                <span class="fs-5">@currentAyah.Translation</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Navigation Controls -->
-                <div class="ayah-controls">
-                    <button class="btn btn-outline-primary control-button" @onclick="LoadPreviousAyah" disabled="@isLoading">
-                        @if (isLoading && currentAction == "previous")
-                        {
-                            <div class="loading-spinner"></div>
-                        }
-                        else
-                        {
-                            <span>⬅️</span>
-                        }
-                        <span>Previous</span>
-                    </button>
-
-                    <button class="btn btn-primary control-button" @onclick="LoadDailyAyah" disabled="@isLoading">
-                        @if (isLoading && currentAction == "daily")
-                        {
-                            <div class="loading-spinner"></div>
-                        }
-                        else
-                        {
-                            <span>📅</span>
-                        }
-                        <span>Daily</span>
-                    </button>
-
-                    <button class="btn btn-outline-primary control-button" @onclick="LoadRandomAyah" disabled="@isLoading">
-                        @if (isLoading && currentAction == "random")
-                        {
-                            <div class="loading-spinner"></div>
-                        }
-                        else
-                        {
-                            <span>🎲</span>
-                        }
-                        <span>Random</span>
-                    </button>
-
-                    <button class="btn btn-outline-primary control-button" @onclick="LoadNextAyah" disabled="@isLoading">
-                        @if (isLoading && currentAction == "next")
-                        {
-                            <div class="loading-spinner"></div>
-                        }
-                        else
-                        {
-                            <span>➡️</span>
-                        }
-                        <span>Next</span>
-                    </button>
-                </div>
-
-                <!-- Additional Actions -->
-                <div class="text-center mt-4">
-                    <button class="btn btn-link" @onclick="ShareAyah" title="Share this verse">
-                        📤 Share
-                    </button>
-                </div>
-
-            }
-            else
-            {
-                <!-- Loading State -->
-                <div class="text-center py-5">
-                    <div class="loading-spinner mb-3" style="width: 3rem; height: 3rem;"></div>
-                    <p class="text-muted">Loading today's verse...</p>
+                <div class="transliteration-text">
+                    <em>@currentAyah.Transliteration</em>
                 </div>
             }
 
-            <!-- Footer -->
-            <div class="text-center mt-5 pt-4 border-top">
-                <small class="text-muted">
-                    May Allah bless you with guidance and peace 🤲
-                </small>
+            <!-- Translation -->
+            <div class="translation-section">
+                <div class="translation-content">
+                    <small class="translation-label">Sahih International</small>
+                    <p class="translation-text">@currentAyah.Translation</p>
+                </div>
             </div>
+        </article>
+
+        <!-- Navigation Controls -->
+        <nav class="verse-navigation">
+            <button class="nav-btn nav-btn-secondary" @onclick="LoadPreviousAyah" disabled="@isLoading">
+                @if (isLoading && currentAction == "previous")
+                {
+                    <div class="btn-spinner"></div>
+                }
+                else
+                {
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15,18 9,12 15,6" />
+                    </svg>
+                }
+                <span class="btn-text">Previous</span>
+            </button>
+
+            <button class="nav-btn nav-btn-primary" @onclick="LoadDailyAyah" disabled="@isLoading">
+                @if (isLoading && currentAction == "daily")
+                {
+                    <div class="btn-spinner"></div>
+                }
+                else
+                {
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                }
+                <span class="btn-text">Today</span>
+            </button>
+
+            <button class="nav-btn nav-btn-secondary" @onclick="LoadRandomAyah" disabled="@isLoading">
+                @if (isLoading && currentAction == "random")
+                {
+                    <div class="btn-spinner"></div>
+                }
+                else
+                {
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 002-2V6l-3-4H6zM3.8 6L6 3.5 18.2 6H3.8zM16 8v2" />
+                        <circle cx="12" cy="13" r="2" />
+                    </svg>
+                }
+                <span class="btn-text">Random</span>
+            </button>
+
+            <button class="nav-btn nav-btn-secondary" @onclick="LoadNextAyah" disabled="@isLoading">
+                @if (isLoading && currentAction == "next")
+                {
+                    <div class="btn-spinner"></div>
+                }
+                else
+                {
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9,18 15,12 9,6" />
+                    </svg>
+                }
+                <span class="btn-text">Next</span>
+            </button>
+        </nav>
+
+        <!-- Action Buttons -->
+        <div class="action-section">
+            <button class="action-btn" @onclick="ShareAyah" title="Share this verse">
+                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                    <polyline points="16,6 12,2 8,6" />
+                    <line x1="12" y1="2" x2="12" y2="15" />
+                </svg>
+                <span>Share Verse</span>
+            </button>
         </div>
-    </div>
+    }
+    else
+    {
+        <!-- Loading State -->
+        <div class="loading-container">
+            <div class="loading-spinner-large"></div>
+            <p class="loading-text">Loading today's verse...</p>
+        </div>
+    }
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p class="footer-blessing">
+            May Allah bless you with guidance and peace
+        </p>
+    </footer>
 </div>
+
+<style>
+    .home-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 2rem 0;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin: 0 0 0.5rem 0;
+    }
+
+    .page-date {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .verse-card {
+        background: var(--bg-card-elevated);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-color);
+    }
+
+    .verse-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .surah-badge {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--primary-color);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+    }
+
+    .surah-name {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .surah-reference {
+        font-size: 0.875rem;
+        opacity: 0.9;
+    }
+
+    .arabic-verse {
+        font-family: 'Amiri', serif;
+        font-size: 2rem;
+        line-height: 1.8;
+        color: var(--text-arabic);
+        direction: rtl;
+        text-align: center;
+        padding: 2rem 1rem;
+        margin: 1.5rem 0;
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .transliteration-text {
+        font-style: italic;
+        color: var(--text-transliteration);
+        font-size: 1.1rem;
+        text-align: center;
+        margin: 1rem 0 1.5rem 0;
+        padding: 0 1rem;
+    }
+
+    .translation-section {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .translation-content {
+        display: inline-block;
+        text-align: left;
+        max-width: 100%;
+    }
+
+    .translation-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+
+    .translation-text {
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        margin: 0;
+        font-weight: 400;
+    }
+
+    .verse-navigation {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        border: 2px solid transparent;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-height: 3rem;
+    }
+
+        .nav-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+    .nav-btn-primary {
+        background: var(--primary-color);
+        color: white;
+        grid-column: 1 / -1;
+    }
+
+        .nav-btn-primary:hover:not(:disabled) {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+    .nav-btn-secondary {
+        background: transparent;
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+        .nav-btn-secondary:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: white;
+        }
+
+    .btn-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .btn-text {
+        font-weight: 600;
+    }
+
+    .btn-spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid transparent;
+        border-top-color: currentColor;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    .action-section {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
+    .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+
+        .action-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--primary-color);
+        }
+
+    .action-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 2rem;
+        text-align: center;
+        flex: 1;
+    }
+
+    .loading-spinner-large {
+        width: 3rem;
+        height: 3rem;
+        border: 3px solid var(--border-color);
+        border-top-color: var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+    }
+
+    .loading-text {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .page-footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        margin-top: auto;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .footer-blessing {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin: 0;
+        font-style: italic;
+    }
+
+    @@keyframes spin {
+        to
+
+    {
+        transform: rotate(360deg);
+    }
+
+    }
+
+    @@media (min-width: 640px) {
+        .verse-navigation
+
+    {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .nav-btn-primary {
+        grid-column: auto;
+    }
+
+    }
+
+    @@media (max-width: 640px) {
+        .home-container
+
+    {
+        padding: 0.5rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .arabic-verse {
+        font-size: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .verse-card {
+        padding: 1.5rem;
+    }
+
+    .nav-btn {
+        padding: 0.875rem;
+        font-size: 0.8rem;
+    }
+
+    .btn-text {
+        display: none;
+    }
+
+    }
+</style>
 
 @code {
     private AyahDisplay? currentAyah;
@@ -193,7 +507,6 @@
         }
         catch (Exception ex)
         {
-            // Handle error appropriately
             Console.WriteLine($"Error performing action {action}: {ex.Message}");
         }
         finally
@@ -213,9 +526,9 @@
     {
         if (currentAyah == null) return;
 
-        var shareText = $"📖 {currentAyah.Arabic}\n\n" +
+        var shareText = $"{currentAyah.Arabic}\n\n" +
                        $"\"{currentAyah.Translation}\"\n\n" +
-                       $"- Quran {currentAyah.SurahNumber}:{currentAyah.AyahNumber} ({currentAyah.SurahName})";
+                       $"- Quran {currentAyah.SurahNumber}:{(int)currentAyah.AyahNumber} ({currentAyah.SurahName})";
 
         try
         {
@@ -228,9 +541,7 @@
         }
         catch
         {
-            // Fallback: copy to clipboard
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", shareText);
-            // You might want to show a toast notification here
         }
     }
 }
