@@ -14,6 +14,7 @@
     --bg-tertiary: #e9ecef;
     --bg-card: #ffffff;
     --bg-card-elevated: #ffffff;
+    --bg-hover: #f1f3f4;
 
     /* Text colors */
     --text-primary: #212529;
@@ -21,20 +22,20 @@
     --text-muted: #8e9297;
     --text-arabic: #2c3e50;
     --text-transliteration: #7f8c8d;
-
+    
     /* Border colors */
     --border-color: #e5e7eb;
     --border-focus: rgba(44, 85, 48, 0.25);
-
+    
     /* Shadow */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
+    
     /* Spacing */
     --border-radius: 0.75rem;
     --border-radius-lg: 1rem;
-
+    
     /* Navigation */
     --nav-bg: #ffffff;
     --nav-text: #212529;
@@ -46,13 +47,14 @@
     --primary-color: #4ade80;
     --primary-hover: #22c55e;
     --secondary-color: #6b7280;
-
+    
     /* Background colors */
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
     --bg-tertiary: #334155;
     --bg-card: #1e293b;
     --bg-card-elevated: #334155;
+    --bg-hover: #475569;
 
     /* Text colors */
     --text-primary: #f1f5f9;
@@ -60,11 +62,11 @@
     --text-muted: #64748b;
     --text-arabic: #f1f5f9;
     --text-transliteration: #94a3b8;
-
+    
     /* Border colors */
     --border-color: #334155;
     --border-focus: rgba(74, 222, 128, 0.25);
-
+    
     /* Shadow */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
@@ -109,7 +111,7 @@ a {
         color: var(--primary-hover);
     }
 
-/* Layout */
+/* Layout - Fixed for mobile responsiveness */
 .app-layout {
     display: flex;
     min-height: 100vh;
@@ -121,11 +123,13 @@ a {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    /* Remove margin-left on mobile, add it only on desktop */
+    margin-left: 0;
 }
 
 .content-container {
     flex: 1;
-    padding: 0;
+    padding: 1rem;
 }
 
 /* Button styles */
@@ -319,18 +323,18 @@ code {
     font-size: 0.875em;
 }
 
-/* Responsive utilities */
+/* Responsive utilities - Fixed mobile layout */
 @media (max-width: 767.98px) {
-    .app-layout {
-        flex-direction: column;
-    }
-
-    .main-content {
-        margin-left: 0;
+    .content-container {
+        padding: 0.5rem;
     }
 }
 
 @media (min-width: 768px) {
+    .main-content {
+        margin-left: 280px; /* Account for sidebar width */
+    }
+
     .content-container {
         padding: 2rem;
     }

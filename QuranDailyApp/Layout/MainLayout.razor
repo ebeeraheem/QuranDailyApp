@@ -1,12 +1,10 @@
 ﻿@inherits LayoutComponentBase
 <div class="app-layout">
-    <main class="d-flex">
-        <div class="sidebar">
-            <NavMenu />
-        </div>
+    <NavMenu />
 
-        <article class="content px-4">
+    <main class="main-content">
+        <div class="content-container">
             @Body
-        </article>
+        </div>
     </main>
 </div>
