@@ -155,6 +155,18 @@ class PWAInstaller {
     }
 }
 
+// Date formatting utility
+window.getFormattedLocalDate = function () {
+    const now = new Date();
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    return now.toLocaleDateString('en-US', options);
+};
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function () {
     window.themeManager = new ThemeManager();

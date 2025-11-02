@@ -10,7 +10,7 @@
     <!-- Header Section -->
     <header class="page-header">
         <h1 class="page-title">Daily Verse</h1>
-        <p class="page-date">@GetCurrentDateFormatted()</p>
+        <p class="page-date">@currentDateFormatted</p>
     </header>
 
     @if (currentAyah is not null)
@@ -394,56 +394,47 @@
     }
 
     @@keyframes spin {
-        to
-
-    {
-        transform: rotate(360deg);
-    }
-
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     @@media (min-width: 640px) {
-        .verse-navigation
+        .verse-navigation {
+            grid-template-columns: repeat(4, 1fr);
+        }
 
-    {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .nav-btn-primary {
-        grid-column: auto;
-    }
-
+        .nav-btn-primary {
+            grid-column: auto;
+        }
     }
 
     @@media (max-width: 640px) {
-        .home-container
+        .home-container {
+            padding: 0.5rem;
+        }
 
-    {
-        padding: 0.5rem;
-    }
+        .page-title {
+            font-size: 2rem;
+        }
 
-    .page-title {
-        font-size: 2rem;
-    }
+        .arabic-verse {
+            font-size: 1.5rem;
+            padding: 1.5rem 1rem;
+        }
 
-    .arabic-verse {
-        font-size: 1.5rem;
-        padding: 1.5rem 1rem;
-    }
+        .verse-card {
+            padding: 1.5rem;
+        }
 
-    .verse-card {
-        padding: 1.5rem;
-    }
+        .nav-btn {
+            padding: 0.875rem;
+            font-size: 0.8rem;
+        }
 
-    .nav-btn {
-        padding: 0.875rem;
-        font-size: 0.8rem;
-    }
-
-    .btn-text {
-        display: none;
-    }
-
+        .btn-text {
+            display: none;
+        }
     }
 </style>
 
@@ -451,10 +442,35 @@
     private AyahDisplay? currentAyah;
     private bool isLoading = false;
     private string currentAction = "";
+    private string currentDateFormatted = "Loading...";
 
     protected override async Task OnInitializedAsync()
     {
         await LoadDailyAyah();
+        await UpdateCurrentDate();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await UpdateCurrentDate();
+            StateHasChanged();
+        }
+    }
+
+    private async Task UpdateCurrentDate()
+    {
+        try
+        {
+            currentDateFormatted = await JSRuntime.InvokeAsync<string>("getFormattedLocalDate");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting local date: {ex.Message}");
+            // Fallback to server time if JavaScript fails
+            currentDateFormatted = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
+        }
     }
 
     private async Task LoadDailyAyah()
@@ -515,11 +531,6 @@
             currentAction = "";
             StateHasChanged();
         }
-    }
-
-    private string GetCurrentDateFormatted()
-    {
-        return DateTime.Now.ToString("dddd, MMMM dd, yyyy");
     }
 
     private async Task ShareAyah()
