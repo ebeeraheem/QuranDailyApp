@@ -335,6 +335,10 @@ code {
         display: flex;
     }
 
+    .main-content {
+        margin-left: 280px;
+    }
+
     .content-container {
         padding: 2rem;
     }

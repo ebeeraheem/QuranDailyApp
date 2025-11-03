@@ -84,7 +84,11 @@
             </p>
             <div class="footer-divider"></div>
             <small class="footer-copyright">
-                © 2024 Quran Daily
+                © <span id="current-year"></span> Quran Daily
+            </small>
+            <div class="footer-divider"></div>
+            <small class="footer-company">
+                Developed by <a href="https://ebeesolutions.com" target="_blank" rel="noopener noreferrer" class="company-link">Ebee Solutions</a>
             </small>
         </div>
     </div>
@@ -334,13 +338,31 @@
         font-size: 0.75rem;
     }
 
+    .footer-company {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    .company-link {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.2s ease;
+    }
+
+        .company-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
     @@media (min-width: 768px) {
         .nav-header {
             display: none;
         }
 
         .nav-menu {
-            position: static;
+            position: fixed;
             transform: none;
             width: 280px;
             height: 100vh;
@@ -395,3 +417,11 @@
         await JSRuntime.InvokeVoidAsync("showInstallPrompt");
     }
 }
+
+<script>
+    const yearElement = document.getElementById('current-year');
+    if (yearElement)
+    {
+        yearElement.textContent = new Date().getFullYear();
+    }
+</script>
