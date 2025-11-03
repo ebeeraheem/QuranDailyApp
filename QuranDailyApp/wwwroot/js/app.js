@@ -67,17 +67,25 @@ class PWAInstaller {
         const existingPrompt = document.getElementById('install-prompt');
         if (existingPrompt) return;
 
+        // Prevent body scroll
+        document.body.classList.add('modal-open');
+
         const installPrompt = document.createElement('div');
         installPrompt.id = 'install-prompt';
-        installPrompt.className = 'install-prompt';
+        installPrompt.className = 'install-prompt auto-install';
         installPrompt.innerHTML = `
+            <h3>Install Quran Daily</h3>
+            <p>Get quick access to daily Quran verses with our app. Install it on your device for offline access and a better experience.</p>
             <div>
-                <strong>Install Quran Daily</strong>
-                <div style="font-size: 0.875rem; opacity: 0.9;">Get quick access to daily Quran verses</div>
-            </div>
-            <div>
-                <button onclick="pwaInstaller.install()" style="margin-right: 0.5rem;">Install</button>
-                <button onclick="pwaInstaller.dismissPrompt()">Not Now</button>
+                <button onclick="pwaInstaller.install()" class="install-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7,10 12,15 17,10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Install App
+                </button>
+                <button onclick="pwaInstaller.dismissPrompt()" class="dismiss-btn">Not Now</button>
             </div>
         `;
 
@@ -88,10 +96,26 @@ class PWAInstaller {
             installPrompt.classList.add('show');
         }, 100);
 
-        // Auto-hide after 10 seconds
+        // Auto-hide after 15 seconds
         setTimeout(() => {
             this.dismissPrompt();
-        }, 10000);
+        }, 15000);
+
+        // Close on backdrop click
+        installPrompt.addEventListener('click', (e) => {
+            if (e.target === installPrompt) {
+                this.dismissPrompt();
+            }
+        });
+
+        // Close on Escape key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                this.dismissPrompt();
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
     }
 
     async install() {
@@ -118,6 +142,7 @@ class PWAInstaller {
         const installPrompt = document.getElementById('install-prompt');
         if (installPrompt) {
             installPrompt.classList.remove('show');
+            document.body.classList.remove('modal-open');
             setTimeout(() => {
                 installPrompt.remove();
             }, 300);
@@ -135,23 +160,58 @@ class PWAInstaller {
     }
 
     showManualInstallInstructions() {
+        const existingPrompt = document.getElementById('install-prompt');
+        if (existingPrompt) return;
+
+        // Prevent body scroll
+        document.body.classList.add('modal-open');
+
         const instructions = document.createElement('div');
-        instructions.className = 'install-prompt show';
+        instructions.id = 'install-prompt';
+        instructions.className = 'install-prompt manual-install show';
         instructions.innerHTML = `
-            <div>
-                <strong>Install Quran Daily</strong>
-                <div style="font-size: 0.875rem; opacity: 0.9;">
-                    To install: Use your browser's menu and select "Install" or "Add to Home Screen"
-                </div>
+            <h3>Install Quran Daily</h3>
+            <p>To install this app on your device:</p>
+            <div style="text-align: left; margin: 1rem 0;">
+                <strong>On Mobile:</strong><br>
+                • Tap the browser menu (⋮ or share button)<br>
+                • Select "Add to Home Screen" or "Install"<br><br>
+                <strong>On Desktop:</strong><br>
+                • Click the install icon in your browser's address bar<br>
+                • Or use your browser's menu and select "Install"
             </div>
-            <button onclick="this.parentElement.remove()">Got it</button>
+            <div>
+                <button onclick="this.parentElement.parentElement.remove(); document.body.classList.remove('modal-open');" class="dismiss-btn">Got it</button>
+            </div>
         `;
 
         document.body.appendChild(instructions);
 
+        // Close on backdrop click
+        instructions.addEventListener('click', (e) => {
+            if (e.target === instructions) {
+                instructions.remove();
+                document.body.classList.remove('modal-open');
+            }
+        });
+
+        // Close on Escape key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                instructions.remove();
+                document.body.classList.remove('modal-open');
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+
+        // Auto-remove after 15 seconds
         setTimeout(() => {
-            instructions.remove();
-        }, 5000);
+            if (instructions.parentNode) {
+                instructions.remove();
+                document.body.classList.remove('modal-open');
+            }
+        }, 15000);
     }
 }
 
