@@ -5,40 +5,103 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!-- Primary Colors - Green Theme from Blazor PWA -->
+    <Color x:Key="Primary">#2c5530</Color>
+    <Color x:Key="PrimaryHover">#1e3a21</Color>
+    <Color x:Key="PrimaryDark">#4ade80</Color>
+    <Color x:Key="PrimaryDarkHover">#22c55e</Color>
+    <Color x:Key="PrimaryDarkText">#0f172a</Color>
+    
+    <!-- Secondary Colors -->
+    <Color x:Key="Secondary">#6c757d</Color>
+    <Color x:Key="SecondaryDark">#6b7280</Color>
+    <Color x:Key="SecondaryDarkText">#94a3b8</Color>
+    
+    <!-- Semantic Colors -->
+    <Color x:Key="Success">#198754</Color>
+    <Color x:Key="Danger">#dc3545</Color>
+    <Color x:Key="Warning">#ffc107</Color>
+    <Color x:Key="Info">#0dcaf0</Color>
+    <Color x:Key="Tertiary">#2c3e50</Color>
 
-    <Color x:Key="White">White</Color>
-    <Color x:Key="Black">Black</Color>
-    <Color x:Key="Magenta">#D600AA</Color>
-    <Color x:Key="MidnightBlue">#190649</Color>
-    <Color x:Key="OffBlack">#1f1f1f</Color>
+    <!-- Base Colors -->
+    <Color x:Key="White">#ffffff</Color>
+    <Color x:Key="Black">#000000</Color>
+    <Color x:Key="OffBlack">#0f172a</Color>
+    
+    <!-- Background Colors - Light Theme -->
+    <Color x:Key="BackgroundPrimary">#ffffff</Color>
+    <Color x:Key="BackgroundSecondary">#f8f9fa</Color>
+    <Color x:Key="BackgroundTertiary">#e9ecef</Color>
+    <Color x:Key="BackgroundCard">#ffffff</Color>
+    
+    <!-- Background Colors - Dark Theme -->
+    <Color x:Key="BackgroundPrimaryDark">#0f172a</Color>
+    <Color x:Key="BackgroundSecondaryDark">#1e293b</Color>
+    <Color x:Key="BackgroundTertiaryDark">#334155</Color>
+    <Color x:Key="BackgroundCardDark">#1e293b</Color>
+    <Color x:Key="BackgroundCardElevatedDark">#334155</Color>
+    
+    <!-- Text Colors - Light Theme -->
+    <Color x:Key="TextPrimary">#212529</Color>
+    <Color x:Key="TextSecondary">#6c757d</Color>
+    <Color x:Key="TextMuted">#8e9297</Color>
+    <Color x:Key="TextArabic">#2c3e50</Color>
+    <Color x:Key="TextTransliteration">#7f8c8d</Color>
+    
+    <!-- Text Colors - Dark Theme -->
+    <Color x:Key="TextPrimaryDark">#f1f5f9</Color>
+    <Color x:Key="TextSecondaryDark">#94a3b8</Color>
+    <Color x:Key="TextMutedDark">#64748b</Color>
+    <Color x:Key="TextArabicDark">#f1f5f9</Color>
+    <Color x:Key="TextTransliterationDark">#94a3b8</Color>
+    
+    <!-- Border Colors -->
+    <Color x:Key="BorderColor">#e5e7eb</Color>
+    <Color x:Key="BorderColorDark">#334155</Color>
+    <Color x:Key="BorderFocus">#2c5530</Color>
+    <Color x:Key="BorderFocusDark">#4ade80</Color>
 
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
-    <Color x:Key="Gray950">#141414</Color>
+    <!-- Gray Scale -->
+    <Color x:Key="Gray50">#fafafa</Color>
+    <Color x:Key="Gray100">#f5f5f5</Color>
+    <Color x:Key="Gray200">#e5e5e5</Color>
+    <Color x:Key="Gray300">#d4d4d4</Color>
+    <Color x:Key="Gray400">#a3a3a3</Color>
+    <Color x:Key="Gray500">#737373</Color>
+    <Color x:Key="Gray600">#525252</Color>
+    <Color x:Key="Gray700">#404040</Color>
+    <Color x:Key="Gray800">#262626</Color>
+    <Color x:Key="Gray900">#171717</Color>
+    <Color x:Key="Gray950">#0a0a0a</Color>
 
+    <!-- Color Brushes -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+    
+    <!-- Background Brushes -->
+    <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="{StaticResource BackgroundPrimary}"/>
+    <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="{StaticResource BackgroundSecondary}"/>
+    <SolidColorBrush x:Key="BackgroundCardBrush" Color="{StaticResource BackgroundCard}"/>
+    
+    <!-- Text Brushes -->
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}"/>
 
+    <!-- Gray Brushes -->
+    <SolidColorBrush x:Key="Gray50Brush" Color="{StaticResource Gray50}"/>
     <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
     <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
     <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
     <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
     <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
+    <SolidColorBrush x:Key="Gray700Brush" Color="{StaticResource Gray700}"/>
+    <SolidColorBrush x:Key="Gray800Brush" Color="{StaticResource Gray800}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
 </ResourceDictionary>
