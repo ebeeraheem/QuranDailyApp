@@ -9,4 +9,5 @@ public interface INotificationService
     TimeSpan GetNotificationTime();
     void SetNotificationTime(TimeSpan time);
     void SetNotificationEnabled(bool enabled);
+    bool IsFirstLaunch();
 }

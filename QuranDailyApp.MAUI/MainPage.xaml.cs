@@ -1,26 +1,67 @@
 ﻿using QuranDailyApp.Core.Models;
 using QuranDailyApp.Core.Services;
+using QuranDailyApp.Core.Interfaces;
 
 namespace QuranDailyApp.MAUI;
 
 public partial class MainPage : ContentPage
 {
     private readonly QuranService _quranService;
+    private readonly INotificationService _notificationService;
     private AyahDisplay? _currentAyah;
     private bool _isLoading = false;
 
-    public MainPage(QuranService quranService)
+    public MainPage(QuranService quranService, INotificationService notificationService)
     {
         InitializeComponent();
         _quranService = quranService;
+        _notificationService = notificationService;
         
         Loaded += OnPageLoaded;
     }
 
     private async void OnPageLoaded(object? sender, EventArgs e)
     {
+        // Handle first-launch notification setup
+        await InitializeFirstLaunchNotifications();
+        
+        // Load the daily verse
         await LoadDailyAyah();
         UpdateDate();
+    }
+
+    private async Task InitializeFirstLaunchNotifications()
+    {
+        try
+        {
+            // Check if this is the first launch
+            if (_notificationService.IsFirstLaunch())
+            {
+                // First launch - request permission and set up default
+                var hasPermission = await _notificationService.RequestPermissionAsync();
+                
+                if (hasPermission)
+                {
+                    // Set up default 8 AM daily notifications
+                    var defaultTime = new TimeSpan(8, 0, 0);
+                    await _notificationService.ScheduleDailyNotificationAsync(defaultTime, true);
+                    
+                    // Show a friendly message to user
+                    await DisplayAlert("Daily Reminders Set! 🔔", 
+                        "You'll receive daily Quran verse notifications at 8:00 AM.\n\nYou can change the time or turn them off in Settings.", 
+                        "Got it!");
+                }
+                else
+                {
+                    // User denied permission - still save preference as disabled
+                    _notificationService.SetNotificationEnabled(false);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error initializing notifications: {ex.Message}");
+        }
     }
 
     private void UpdateDate()

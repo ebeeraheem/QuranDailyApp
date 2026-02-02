@@ -107,6 +107,11 @@ public partial class MauiNotificationService(QuranService quranService) : INotif
         Preferences.Set(NOTIFICATION_TIME_KEY, time.ToString());
     }
 
+    public bool IsFirstLaunch()
+    {
+        return !Preferences.ContainsKey(NOTIFICATION_ENABLED_KEY);
+    }
+
     private static string GetTruncatedTranslation(string translation, int maxLength = 100)
     {
         if (string.IsNullOrEmpty(translation))

@@ -21,17 +21,8 @@ public partial class SettingsPage : ContentPage
 
     private async Task InitializeAndLoadNotificationSettings()
     {
-        // Request permission on first load
-        var hasPermission = await _notificationService.RequestPermissionAsync();
-        
-        // If no permission and notifications aren't configured, set up defaults
-        if (hasPermission && !_notificationService.IsNotificationEnabled())
-        {
-            var defaultTime = new TimeSpan(8, 0, 0); // 8:00 AM
-            await _notificationService.ScheduleDailyNotificationAsync(defaultTime, true);
-        }
-        
-        // Load current settings for UI (when UI controls are added)
+        // The first-launch setup is now handled in MainPage
+        // Here we just load the current settings for the UI
         LoadNotificationSettingsForUI();
     }
     
@@ -88,19 +79,6 @@ public partial class SettingsPage : ContentPage
         if (_notificationService.IsNotificationEnabled())
         {
             await _notificationService.ScheduleDailyNotificationAsync(newTime, true);
-        }
-    }
-
-    private async Task InitializeNotifications()
-    {
-        // Request permission on app start
-        var hasPermission = await _notificationService.RequestPermissionAsync();
-        
-        // Set up default daily notification at 8 AM if not already configured
-        if (hasPermission && !_notificationService.IsNotificationEnabled())
-        {
-            var defaultTime = new TimeSpan(8, 0, 0); // 8:00 AM
-            await _notificationService.ScheduleDailyNotificationAsync(defaultTime, true);
         }
     }
 
