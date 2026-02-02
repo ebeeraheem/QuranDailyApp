@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="QuranDailyApp.MAUI.MainPage"
              Title="Quran Daily"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundPrimary}, Dark={StaticResource BackgroundPrimaryDark}}">
@@ -8,6 +9,12 @@
     <Shell.FlyoutBehavior>
         <FlyoutBehavior>Flyout</FlyoutBehavior>
     </Shell.FlyoutBehavior>
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+            StatusBarStyle="{AppThemeBinding Light=Light, Dark=Dark}" />
+    </ContentPage.Behaviors>
 
     <!-- Main Grid Container -->
     <Grid>

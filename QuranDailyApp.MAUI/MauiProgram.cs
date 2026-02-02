@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using QuranDailyApp.Core.Services;
-using QuranDailyApp.Core.Interfaces;
-using QuranDailyApp.MAUI.Services;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
+using QuranDailyApp.Core.Interfaces;
+using QuranDailyApp.Core.Services;
+using QuranDailyApp.MAUI.Services;
 using INotificationService = QuranDailyApp.Core.Interfaces.INotificationService;
 
 namespace QuranDailyApp.MAUI;
@@ -14,6 +15,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .UseLocalNotification()
             .ConfigureFonts(fonts =>
             {
