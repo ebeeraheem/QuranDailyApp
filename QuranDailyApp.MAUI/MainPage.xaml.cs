@@ -47,7 +47,7 @@ public partial class MainPage : ContentPage
                     await _notificationService.ScheduleDailyNotificationAsync(defaultTime, true);
                     
                     // Show a friendly message to user
-                    await DisplayAlert("Daily Reminders Set! 🔔", 
+                    await DisplayAlertAsync("Daily Reminders Set! 🔔", 
                         "You'll receive daily Quran verse notifications at 8:00 AM.\n\nYou can change the time or turn them off in Settings.", 
                         "Got it!");
                 }
@@ -130,7 +130,7 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Failed to load verse: {ex.Message}", "OK");
+            await DisplayAlertAsync("Error", $"Failed to load verse: {ex.Message}", "OK");
         }
         finally
         {
@@ -206,11 +206,11 @@ public partial class MainPage : ContentPage
             try
             {
                 await Clipboard.Default.SetTextAsync(shareText);
-                await DisplayAlert("Copied", "Verse copied to clipboard!", "OK");
+                await DisplayAlertAsync("Copied", "Verse copied to clipboard!", "OK");
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Unable to share verse: {ex.Message}", "OK");
+                await DisplayAlertAsync("Error", $"Unable to share verse: {ex.Message}", "OK");
             }
         }
     }

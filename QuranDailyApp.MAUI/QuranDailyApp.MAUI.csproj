@@ -73,10 +73,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\QuranData\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Update="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.30" />
 	</ItemGroup>
 

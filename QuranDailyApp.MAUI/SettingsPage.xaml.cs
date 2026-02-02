@@ -47,7 +47,7 @@ public partial class SettingsPage : ContentPage
             var hasPermission = await _notificationService.RequestPermissionAsync();
             if (!hasPermission)
             {
-                await DisplayAlert("Permission Required", 
+                await DisplayAlertAsync("Permission Required", 
                     "To receive daily notifications, please enable notification permissions in your device settings.", 
                     "OK");
                 
@@ -124,6 +124,12 @@ public partial class SettingsPage : ContentPage
         }
 
         Preferences.Set("Theme", theme);
+    }
+
+    private async void OnEbeeSolutionsLinkTapped(object sender, TappedEventArgs e)
+    {
+        var uri = new Uri("https://ebeesolutions.com");
+        await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
     }
 
     // Notification event handlers (to be connected when XAML controls are added)

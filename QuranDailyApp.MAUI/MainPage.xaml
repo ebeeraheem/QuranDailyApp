@@ -172,19 +172,19 @@
             
             <Button Grid.Column="0"
                     x:Name="PreviousButton" 
-                    Text="◀ Previous"
+                    Text="◀"
                     Clicked="OnPreviousClicked"
                     Style="{StaticResource Key=Button}"/>
             
             <Button Grid.Column="1"
                     x:Name="RandomButton"
-                    Text="🎲 Random" 
+                    Text="Random" 
                     Clicked="OnRandomClicked"
                     Style="{StaticResource Key=Button}"/>
             
             <Button Grid.Column="2"
                     x:Name="NextButton"
-                    Text="Next ▶"
+                    Text="▶"
                     Clicked="OnNextClicked" 
                     Style="{StaticResource Key=Button}"/>
         </Grid>

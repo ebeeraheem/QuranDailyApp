@@ -9,7 +9,7 @@
 
     <!-- Flyout Header -->
     <Shell.FlyoutHeader>
-        <Grid BackgroundColor="{StaticResource Primary}" 
+        <Grid BackgroundColor="{StaticResource PrimaryDark}" 
               HeightRequest="200"
               Padding="20">
             <VerticalStackLayout VerticalOptions="End">
@@ -42,12 +42,20 @@
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="20" 
                              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundSecondary}, Dark={StaticResource BackgroundSecondaryDark}}">
-            <Label Text="© 2024 Quran Daily" 
-                   HorizontalOptions="Center"
-                   Style="{StaticResource MutedText}"/>
-            <Label Text="Developed by Ebee Solutions" 
-                   HorizontalOptions="Center"
-                   Style="{StaticResource MutedText}"/>
+            <StackLayout Orientation="Horizontal"
+                                HorizontalOptions="Center"
+                                Margin="0,20,0,0">
+                <Label Text="Developed by " 
+                                Style="{StaticResource MutedText}"/>
+                <Label Text="Ebee Solutions" 
+                               Style="{StaticResource MutedText}"
+                               TextColor="{StaticResource Primary}"
+                               TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEbeeSolutionsLinkTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
         </VerticalStackLayout>
     </Shell.FlyoutFooter>
 
