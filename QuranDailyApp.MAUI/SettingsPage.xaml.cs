@@ -1,17 +1,42 @@
+using QuranDailyApp.Core.Interfaces;
+
 namespace QuranDailyApp.MAUI;
 
 public partial class SettingsPage : ContentPage
 {
-    public SettingsPage()
+    private readonly INotificationService _notificationService;
+
+    public SettingsPage(INotificationService notificationService)
     {
         InitializeComponent();
+        _notificationService = notificationService;
+        LoadSettings();
+    }
+
+    private async void LoadSettings()
+    {
         LoadCurrentTheme();
+        // TODO: Add notification settings UI
+        await InitializeNotifications();
+    }
+
+    private async Task InitializeNotifications()
+    {
+        // Request permission on app start
+        var hasPermission = await _notificationService.RequestPermissionAsync();
+        
+        // Set up default daily notification at 8 AM if not already configured
+        if (hasPermission && !_notificationService.IsNotificationEnabled())
+        {
+            var defaultTime = new TimeSpan(8, 0, 0); // 8:00 AM
+            await _notificationService.ScheduleDailyNotificationAsync(defaultTime, true);
+        }
     }
 
     private void LoadCurrentTheme()
     {
         var theme = Preferences.Get("Theme", "System");
-
+        
         switch (theme)
         {
             case "Light":
