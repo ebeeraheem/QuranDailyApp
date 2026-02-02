@@ -9,173 +9,186 @@
         <FlyoutBehavior>Flyout</FlyoutBehavior>
     </Shell.FlyoutBehavior>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
-            
-            <!-- Header Section -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+    <!-- Main Grid Container -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!-- Scrollable Content Area -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="20">
                 
-                <!-- Header Text -->
-                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
-                    <Label Text="Daily Verse" 
-                           Style="{StaticResource Headline}"
-                           HorizontalOptions="Center"/>
-                    <Label x:Name="DateLabel" 
-                           Text="Loading..."
-                           Style="{StaticResource SecondaryText}"
-                           HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-                
-                <!-- Today Button -->
-                <Button Grid.Column="1" 
-                        x:Name="TodayButton"
-                        Text="Today"
-                        Clicked="OnTodayClicked"
-                        BackgroundColor="{StaticResource Primary}"
-                        TextColor="White"
-                        WidthRequest="80"
-                        HeightRequest="60"/>
-            </Grid>
-
-            <!-- Loading Indicator -->
-            <ActivityIndicator x:Name="LoadingIndicator" 
-                             IsVisible="True" 
-                             IsRunning="True"
-                             Color="{StaticResource Primary}"
-                             VerticalOptions="Center"
-                             HorizontalOptions="Center"/>
-
-            <!-- Verse Card -->
-            <Border x:Name="VerseCard" 
-                    IsVisible="False"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundCard}, Dark={StaticResource BackgroundCardDark}}"
-                    Stroke="{StaticResource BorderColor}"
-                    StrokeThickness="1"
-                    Padding="20">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="16"/>
-                </Border.StrokeShape>
-                
-                <VerticalStackLayout Spacing="20">
+                <!-- Header Section -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
                     
-                    <!-- Verse Header -->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <!-- Surah Badge -->
-                        <Border Grid.Column="0"
-                                BackgroundColor="{StaticResource Primary}"
-                                Padding="12,8"
-                                HorizontalOptions="Start">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8"/>
-                            </Border.StrokeShape>
-                            <VerticalStackLayout>
-                                <Label x:Name="SurahNameLabel" 
-                                       Text="AL-FĀTIḤAH"
-                                       TextColor="White"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"/>
-                                <Label x:Name="SurahReferenceLabel" 
-                                       Text="1:1"
-                                       TextColor="White"
-                                       FontSize="12"
-                                       Opacity="0.9"
-                                       HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        
-                        <!-- Share Button -->
-                        <Button Grid.Column="1" 
-                                x:Name="ShareButton"
-                                Text="📤"
-                                Clicked="OnShareClicked"
-                                BackgroundColor="Transparent"
-                                TextColor="{StaticResource Primary}"
-                                BorderColor="{StaticResource BorderColor}"
-                                BorderWidth="1"
-                                WidthRequest="50"
-                                HeightRequest="50"
-                                CornerRadius="25"/>
-                    </Grid>
-
-                    <!-- Arabic Text -->
-                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundSecondary}, Dark={StaticResource BackgroundSecondaryDark}}"
-                            Padding="20">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12"/>
-                        </Border.StrokeShape>
-                        <Label x:Name="ArabicLabel" 
-                               Text="بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ"
-                               Style="{StaticResource ArabicText}"
-                               HorizontalTextAlignment="Center"
-                               FlowDirection="RightToLeft"/>
-                    </Border>
-
-                    <!-- Transliteration -->
-                    <Label x:Name="TransliterationLabel" 
-                           Text="bi-smi llāhi r-raḥmāni r-raḥīmi"
-                           Style="{StaticResource TransliterationText}"
-                           HorizontalTextAlignment="Center"/>
-
-                    <!-- Translation -->
-                    <VerticalStackLayout>
-                        <Label Text="Sahih International" 
-                               Style="{StaticResource MutedText}"
-                               HorizontalTextAlignment="Center"
-                               FontAttributes="Bold"/>
-                        <Label x:Name="TranslationLabel" 
-                               Text="In the Name of Allah, the All-beneficent, the All-merciful."
-                               HorizontalTextAlignment="Center"
-                               LineBreakMode="WordWrap"/>
+                    <!-- Header Text -->
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                        <Label Text="Daily Verse" 
+                               Style="{StaticResource Headline}"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="DateLabel" 
+                               Text="Loading..."
+                               Style="{StaticResource SecondaryText}"
+                               HorizontalOptions="Center"/>
                     </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Border>
+                    
+                    <!-- Today Button -->
+                    <Button Grid.Column="1" 
+                            x:Name="TodayButton"
+                            Text="Today"
+                            Clicked="OnTodayClicked"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            WidthRequest="80"
+                            HeightRequest="60"/>
+                </Grid>
 
-            <!-- Navigation Buttons -->
-            <Grid x:Name="NavigationGrid" 
-                  IsVisible="False"
-                  ColumnSpacing="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-                <Button Grid.Column="0"
-                        x:Name="PreviousButton" 
-                        Text="◀ Previous"
-                        Clicked="OnPreviousClicked"
-                        Style="{StaticResource Key=Button}"/>
-                
-                <Button Grid.Column="1"
-                        x:Name="RandomButton"
-                        Text="🎲 Random" 
-                        Clicked="OnRandomClicked"
-                        Style="{StaticResource Key=Button}"/>
-                
-                <Button Grid.Column="2"
-                        x:Name="NextButton"
-                        Text="Next ▶"
-                        Clicked="OnNextClicked" 
-                        Style="{StaticResource Key=Button}"/>
-            </Grid>
+                <!-- Loading Indicator -->
+                <ActivityIndicator x:Name="LoadingIndicator" 
+                                 IsVisible="True" 
+                                 IsRunning="True"
+                                 Color="{StaticResource Primary}"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center"/>
 
-            <!-- Footer -->
-            <Label Text="May Allah bless you with guidance and peace"
-                   Style="{StaticResource MutedText}"
-                   HorizontalTextAlignment="Center"
-                   FontAttributes="Italic"
-                   Margin="0,40,0,20"/>
+                <!-- Verse Card -->
+                <Border x:Name="VerseCard" 
+                        IsVisible="False"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundCard}, Dark={StaticResource BackgroundCardDark}}"
+                        Stroke="{StaticResource BorderColor}"
+                        StrokeThickness="1"
+                        Padding="20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16"/>
+                    </Border.StrokeShape>
+                    
+                    <VerticalStackLayout Spacing="20">
+                        
+                        <!-- Verse Header -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Surah Badge -->
+                            <Border Grid.Column="0"
+                                    BackgroundColor="{StaticResource Primary}"
+                                    Padding="12,8"
+                                    HorizontalOptions="Start">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <VerticalStackLayout>
+                                    <Label x:Name="SurahNameLabel" 
+                                           Text="AL-FĀTIḤAH"
+                                           TextColor="White"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"/>
+                                    <Label x:Name="SurahReferenceLabel" 
+                                           Text="1:1"
+                                           TextColor="White"
+                                           FontSize="12"
+                                           Opacity="0.9"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            
+                            <!-- Share Button -->
+                            <Button Grid.Column="1" 
+                                    x:Name="ShareButton"
+                                    Text="📤"
+                                    Clicked="OnShareClicked"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource Primary}"
+                                    BorderColor="{StaticResource BorderColor}"
+                                    BorderWidth="1"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    CornerRadius="25"/>
+                        </Grid>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                        <!-- Arabic Text -->
+                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundSecondary}, Dark={StaticResource BackgroundSecondaryDark}}"
+                                Padding="20">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
+                            <Label x:Name="ArabicLabel" 
+                                   Text="بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ"
+                                   Style="{StaticResource ArabicText}"
+                                   HorizontalTextAlignment="Center"
+                                   FlowDirection="RightToLeft"/>
+                        </Border>
+
+                        <!-- Transliteration -->
+                        <Label x:Name="TransliterationLabel" 
+                               Text="bi-smi llāhi r-raḥmāni r-raḥīmi"
+                               Style="{StaticResource TransliterationText}"
+                               HorizontalTextAlignment="Center"/>
+
+                        <!-- Translation -->
+                        <VerticalStackLayout>
+                            <Label Text="Sahih International" 
+                                   Style="{StaticResource MutedText}"
+                                   HorizontalTextAlignment="Center"
+                                   FontAttributes="Bold"/>
+                            <Label x:Name="TranslationLabel" 
+                                   Text="In the Name of Allah, the All-beneficent, the All-merciful."
+                                   HorizontalTextAlignment="Center"
+                                   LineBreakMode="WordWrap"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Footer -->
+                <Label Text="May Allah bless you with guidance and peace"
+                       Style="{StaticResource MutedText}"
+                       HorizontalTextAlignment="Center"
+                       FontAttributes="Italic"
+                       Margin="0,40,0,20"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- Fixed Navigation Buttons at Bottom -->
+        <Grid Grid.Row="1" 
+              x:Name="NavigationGrid" 
+              IsVisible="False"
+              ColumnSpacing="10"
+              Padding="20,10,20,20"
+              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundPrimary}, Dark={StaticResource BackgroundPrimaryDark}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0"
+                    x:Name="PreviousButton" 
+                    Text="◀ Previous"
+                    Clicked="OnPreviousClicked"
+                    Style="{StaticResource Key=Button}"/>
+            
+            <Button Grid.Column="1"
+                    x:Name="RandomButton"
+                    Text="🎲 Random" 
+                    Clicked="OnRandomClicked"
+                    Style="{StaticResource Key=Button}"/>
+            
+            <Button Grid.Column="2"
+                    x:Name="NextButton"
+                    Text="Next ▶"
+                    Clicked="OnNextClicked" 
+                    Style="{StaticResource Key=Button}"/>
+        </Grid>
+        
+    </Grid>
 
 </ContentPage>
