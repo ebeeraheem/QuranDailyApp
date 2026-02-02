@@ -89,7 +89,7 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlertAsync("Error", $"Failed to load verse: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"Failed to load verse: {ex.Message}", "OK");
         }
         finally
         {
@@ -165,11 +165,11 @@ public partial class MainPage : ContentPage
             try
             {
                 await Clipboard.Default.SetTextAsync(shareText);
-                await DisplayAlertAsync("Copied", "Verse copied to clipboard!", "OK");
+                await DisplayAlert("Copied", "Verse copied to clipboard!", "OK");
             }
             catch (Exception ex)
             {
-                await DisplayAlertAsync("Error", $"Unable to share verse: {ex.Message}", "OK");
+                await DisplayAlert("Error", $"Unable to share verse: {ex.Message}", "OK");
             }
         }
     }

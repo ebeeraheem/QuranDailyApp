@@ -34,7 +34,7 @@ public static class MauiProgram
         builder.Services.AddScoped<QuranService>();
 
         // Register pages
-        builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddTransient<MainPage>();
         builder.Services.AddSingleton<SettingsPage>();
 
 #if DEBUG

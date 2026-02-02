@@ -7,6 +7,65 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
+
+			<!-- Notifications Section -->
+			<Label Text="Notifications"
+				   Style="{StaticResource SubHeadline}"
+				   Margin="0,0,0,10"/>
+
+			<Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundCard}, Dark={StaticResource BackgroundCardDark}}"
+					Stroke="{StaticResource BorderColor}"
+					StrokeThickness="1"
+					Padding="20">
+				<Border.StrokeShape>
+					<RoundRectangle CornerRadius="12"/>
+				</Border.StrokeShape>
+
+				<VerticalStackLayout Spacing="15">
+
+					<!-- Enable Notifications -->
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<VerticalStackLayout Grid.Column="0">
+							<Label Text="Daily Reminders"
+								   FontAttributes="Bold"/>
+							<Label Text="Get notified about today's verse"
+								   Style="{StaticResource MutedText}"
+								   FontSize="12"/>
+						</VerticalStackLayout>
+						<Switch Grid.Column="1"
+								x:Name="NotificationSwitch"
+								Toggled="OnNotificationToggled"/>
+					</Grid>
+
+					<!-- Notification Time -->
+					<Grid x:Name="NotificationTimeGrid" IsVisible="False">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<Label Grid.Column="0"
+							   Text="Notification Time"
+							   VerticalOptions="Center"
+							   FontAttributes="Bold"/>
+						<TimePicker Grid.Column="1"
+									x:Name="NotificationTimePicker"
+									Format="HH:mm"
+									PropertyChanged="OnNotificationTimeChanged"/>
+					</Grid>
+
+					<!-- Permission Status -->
+					<Label x:Name="PermissionStatusLabel"
+						   IsVisible="False"
+						   Style="{StaticResource MutedText}"
+						   FontSize="12"
+						   TextColor="{StaticResource Danger}"/>
+
+				</VerticalStackLayout>
+			</Border>
             
             <!-- Appearance Section -->
             <Label Text="Appearance" 
