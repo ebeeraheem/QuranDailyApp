@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using QuranDailyApp.Core.Services;
+using QuranDailyApp.Core.Interfaces;
+using QuranDailyApp.MAUI.Services;
 
 namespace QuranDailyApp.MAUI;
 
@@ -15,8 +18,21 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        // Add caching services
+        builder.Services.AddMemoryCache();
+
+        // Add file service for MAUI
+        builder.Services.AddScoped<IFileService, MauiFileService>();
+
+        // Add core services
+        builder.Services.AddScoped<QuranService>();
+
+        // Register pages
+        builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<SettingsPage>();
+
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
         return builder.Build();

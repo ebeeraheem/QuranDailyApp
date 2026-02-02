@@ -1,23 +1,177 @@
-﻿namespace QuranDailyApp.MAUI;
+﻿using QuranDailyApp.Core.Models;
+using QuranDailyApp.Core.Services;
+
+namespace QuranDailyApp.MAUI;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
+    private readonly QuranService _quranService;
+    private AyahDisplay? _currentAyah;
+    private bool _isLoading = false;
 
-    public MainPage()
+    public MainPage(QuranService quranService)
     {
         InitializeComponent();
+        _quranService = quranService;
+        
+        Loaded += OnPageLoaded;
     }
 
-    private void OnCounterClicked(object? sender, EventArgs e)
+    private async void OnPageLoaded(object? sender, EventArgs e)
     {
-        count++;
+        await LoadDailyAyah();
+        UpdateDate();
+    }
 
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
+    private void UpdateDate()
+    {
+        DateLabel.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
+    }
 
-        SemanticScreenReader.Announce(CounterBtn.Text);
+    private async Task LoadDailyAyah()
+    {
+        await PerformActionWithLoading(async () =>
+        {
+            _currentAyah = await _quranService.GetDailyAyahAsync();
+            UpdateVerseDisplay();
+        });
+    }
+
+    private async Task LoadRandomAyah()
+    {
+        await PerformActionWithLoading(async () =>
+        {
+            _currentAyah = await _quranService.GetRandomAyahAsync();
+            UpdateVerseDisplay();
+        });
+    }
+
+    private async Task LoadNextAyah()
+    {
+        if (_currentAyah == null) return;
+
+        await PerformActionWithLoading(async () =>
+        {
+            _currentAyah = await _quranService.GetNextAyah(_currentAyah);
+            UpdateVerseDisplay();
+        });
+    }
+
+    private async Task LoadPreviousAyah()
+    {
+        if (_currentAyah == null) return;
+
+        await PerformActionWithLoading(async () =>
+        {
+            _currentAyah = await _quranService.GetPreviousAyah(_currentAyah);
+            UpdateVerseDisplay();
+        });
+    }
+
+    private async Task PerformActionWithLoading(Func<Task> action)
+    {
+        if (_isLoading) return;
+
+        _isLoading = true;
+        LoadingIndicator.IsVisible = true;
+        VerseCard.IsVisible = false;
+        NavigationGrid.IsVisible = false;
+
+        // Disable buttons
+        TodayButton.IsEnabled = false;
+        PreviousButton.IsEnabled = false;
+        RandomButton.IsEnabled = false;
+        NextButton.IsEnabled = false;
+
+        try
+        {
+            await action();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlertAsync("Error", $"Failed to load verse: {ex.Message}", "OK");
+        }
+        finally
+        {
+            _isLoading = false;
+            LoadingIndicator.IsVisible = false;
+
+            // Re-enable buttons
+            TodayButton.IsEnabled = true;
+            PreviousButton.IsEnabled = true;
+            RandomButton.IsEnabled = true;
+            NextButton.IsEnabled = true;
+        }
+    }
+
+    private void UpdateVerseDisplay()
+    {
+        if (_currentAyah == null) return;
+
+        // Update verse information
+        SurahNameLabel.Text = _currentAyah.SurahName;
+        SurahReferenceLabel.Text = $"{_currentAyah.SurahNumber}:{(int)_currentAyah.AyahNumber}";
+        ArabicLabel.Text = _currentAyah.Arabic;
+        TransliterationLabel.Text = _currentAyah.Transliteration;
+        TranslationLabel.Text = _currentAyah.Translation;
+
+        // Show verse card and navigation
+        VerseCard.IsVisible = true;
+        NavigationGrid.IsVisible = true;
+
+        // Hide transliteration if empty
+        TransliterationLabel.IsVisible = !string.IsNullOrWhiteSpace(_currentAyah.Transliteration);
+    }
+
+    // Event Handlers
+    private async void OnTodayClicked(object sender, EventArgs e)
+    {
+        await LoadDailyAyah();
+    }
+
+    private async void OnRandomClicked(object sender, EventArgs e)
+    {
+        await LoadRandomAyah();
+    }
+
+    private async void OnNextClicked(object sender, EventArgs e)
+    {
+        await LoadNextAyah();
+    }
+
+    private async void OnPreviousClicked(object sender, EventArgs e)
+    {
+        await LoadPreviousAyah();
+    }
+
+    private async void OnShareClicked(object sender, EventArgs e)
+    {
+        if (_currentAyah == null) return;
+
+        var shareText = $"{_currentAyah.Arabic}\n\n" +
+                       $"\"{_currentAyah.Translation}\"\n\n" +
+                       $"- Quran {_currentAyah.SurahNumber}:{(int)_currentAyah.AyahNumber} ({_currentAyah.SurahName})";
+
+        try
+        {
+            await Share.Default.RequestAsync(new ShareTextRequest
+            {
+                Title = "Quran Daily Verse",
+                Text = shareText
+            });
+        }
+        catch
+        {
+            try
+            {
+                await Clipboard.Default.SetTextAsync(shareText);
+                await DisplayAlertAsync("Copied", "Verse copied to clipboard!", "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlertAsync("Error", $"Unable to share verse: {ex.Message}", "OK");
+            }
+        }
     }
 }
+

@@ -4,11 +4,51 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:QuranDailyApp.MAUI"
-    Title="QuranDailyApp.MAUI">
+    Title="Quran Daily"
+    FlyoutBehavior="Flyout">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- Flyout Header -->
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource Primary}" 
+              HeightRequest="200"
+              Padding="20">
+            <VerticalStackLayout VerticalOptions="End">
+                <Label Text="Quran Daily" 
+                       TextColor="White"
+                       FontSize="24"
+                       FontAttributes="Bold"/>
+                <Label Text="Daily Guidance from the Holy Quran" 
+                       TextColor="White"
+                       FontSize="14"
+                       Opacity="0.8"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Flyout Items -->
+    <FlyoutItem Title="Daily Verse" 
+                Icon="home.png">
+        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" 
+                      Route="home"/>
+    </FlyoutItem>
+    
+    <FlyoutItem Title="Settings" 
+                Icon="settings.png">
+        <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" 
+                      Route="settings"/>
+    </FlyoutItem>
+
+    <!-- Flyout Footer -->
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="20" 
+                             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundSecondary}, Dark={StaticResource BackgroundSecondaryDark}}">
+            <Label Text="© 2024 Quran Daily" 
+                   HorizontalOptions="Center"
+                   Style="{StaticResource MutedText}"/>
+            <Label Text="Developed by Ebee Solutions" 
+                   HorizontalOptions="Center"
+                   Style="{StaticResource MutedText}"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
 
 </Shell>

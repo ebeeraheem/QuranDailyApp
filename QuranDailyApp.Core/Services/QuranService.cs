@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using QuranDailyApp.Core.Models;
+using QuranDailyApp.Core.Interfaces;
 using System.Text.Json;
 
 namespace QuranDailyApp.Core.Services;
 
-
-public class QuranService(IMemoryCache cache, HttpClient httpClient, ILogger<QuranService> logger)
+public class QuranService(IMemoryCache cache, IFileService fileService, ILogger<QuranService> logger)
 {
     private List<AyahDisplay> _allAyahs = [];
     private readonly JsonSerializerOptions _jsonOptions = new()
@@ -23,7 +23,8 @@ public class QuranService(IMemoryCache cache, HttpClient httpClient, ILogger<Qur
         {
             try
             {
-                var json = await httpClient.GetStringAsync("data/quran.json");
+                // Use the file service to read the JSON file
+                var json = await fileService.ReadTextAsync("quran.json");
                 quranData = JsonSerializer.Deserialize<QuranData>(json, _jsonOptions);
                 cache.Set(nameof(QuranData), quranData, TimeSpan.FromDays(1)); // Cache for a day
             }

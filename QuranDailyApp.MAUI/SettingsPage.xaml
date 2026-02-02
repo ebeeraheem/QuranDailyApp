@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuranDailyApp.MAUI.SettingsPage"
+             Title="Settings"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundPrimary}, Dark={StaticResource BackgroundPrimaryDark}}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <!-- Appearance Section -->
+            <Label Text="Appearance" 
+                   Style="{StaticResource SubHeadline}"
+                   Margin="0,0,0,10"/>
+            
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundCard}, Dark={StaticResource BackgroundCardDark}}"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeThickness="1"
+                    Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Theme" 
+                           FontAttributes="Bold"
+                           Style="{StaticResource SecondaryText}"/>
+                    
+                    <!-- Light Theme -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" 
+                               Text="Light" 
+                               VerticalOptions="Center"/>
+                        <RadioButton Grid.Column="1" 
+                                     x:Name="LightThemeRadio" 
+                                     GroupName="Theme"
+                                     CheckedChanged="OnThemeChanged"/>
+                    </Grid>
+                    
+                    <!-- Dark Theme -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" 
+                               Text="Dark" 
+                               VerticalOptions="Center"/>
+                        <RadioButton Grid.Column="1" 
+                                     x:Name="DarkThemeRadio" 
+                                     GroupName="Theme"
+                                     CheckedChanged="OnThemeChanged"/>
+                    </Grid>
+                    
+                    <!-- System Theme -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" 
+                               Text="System Default" 
+                               VerticalOptions="Center"/>
+                        <RadioButton Grid.Column="1" 
+                                     x:Name="SystemThemeRadio" 
+                                     GroupName="Theme"
+                                     IsChecked="True"
+                                     CheckedChanged="OnThemeChanged"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+            
+            <!-- About Section -->
+            <Label Text="About" 
+                   Style="{StaticResource SubHeadline}"
+                   Margin="0,20,0,10"/>
+                   
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundCard}, Dark={StaticResource BackgroundCardDark}}"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeThickness="1"
+                    Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Quran Daily" 
+                           FontAttributes="Bold"
+                           FontSize="18"/>
+                    <Label Text="Version 1.0.0" 
+                           Style="{StaticResource MutedText}"/>
+                    <Label Text="Daily verses from the Holy Quran to guide and inspire your spiritual journey."
+                           LineBreakMode="WordWrap"/>
+                    <Label Text="Developed with ?? by Ebee Solutions" 
+                           Style="{StaticResource MutedText}"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,20,0,0"/>
+                </VerticalStackLayout>
+            </Border>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
