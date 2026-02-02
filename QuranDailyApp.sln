@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuranDailyApp", "QuranDaily
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuranDailyApp.MAUI", "QuranDailyApp.MAUI\QuranDailyApp.MAUI.csproj", "{BF1C3050-BF86-4A0F-9037-0DF37B9F7FC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuranDailyApp.Core", "QuranDailyApp.Core\QuranDailyApp.Core.csproj", "{0CEC6D55-5F6C-4A79-A806-6494B8C5CB65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{BF1C3050-BF86-4A0F-9037-0DF37B9F7FC3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{BF1C3050-BF86-4A0F-9037-0DF37B9F7FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF1C3050-BF86-4A0F-9037-0DF37B9F7FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CEC6D55-5F6C-4A79-A806-6494B8C5CB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CEC6D55-5F6C-4A79-A806-6494B8C5CB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CEC6D55-5F6C-4A79-A806-6494B8C5CB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CEC6D55-5F6C-4A79-A806-6494B8C5CB65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
