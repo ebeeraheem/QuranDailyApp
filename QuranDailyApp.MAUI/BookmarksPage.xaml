@@ -40,15 +40,6 @@
             <Label Text="Start bookmarking your favorite verses from the daily verse page"
                    Style="{StaticResource MutedText}"
                    HorizontalTextAlignment="Center"
-                   WidthRequest="120"
-                   HeightRequest="120"/>
-            <Label Text="No Bookmarked Verses"
-                   Style="{StaticResource SubHeadline}"
-                   HorizontalOptions="Center"
-                   Margin="0,0,0,10"/>
-            <Label Text="Start bookmarking your favorite verses from the daily verse page"
-                   Style="{StaticResource MutedText}"
-                   HorizontalTextAlignment="Center"
                    LineBreakMode="WordWrap"/>
             <Button Text="Go to Daily Verse"
                     Clicked="OnGoToDailyVerseClicked"
