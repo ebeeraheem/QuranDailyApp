@@ -27,10 +27,21 @@
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
                             Padding="40">
-            <Label Text="??" 
-                   FontSize="48" 
+            <Image HorizontalOptions="Center"
+				   Margin="0,0,0,20"
+				   Source="text_box_search_outline.png"
+                   WidthRequest="120"
+                   HeightRequest="120">
+            </Image>
+            <Label Text="No Bookmarked Verses"
+                   Style="{StaticResource SubHeadline}"
                    HorizontalOptions="Center"
-                   Margin="0,0,0,20"/>
+                   Margin="0,0,0,10"/>
+            <Label Text="Start bookmarking your favorite verses from the daily verse page"
+                   Style="{StaticResource MutedText}"
+                   HorizontalTextAlignment="Center"
+                   WidthRequest="120"
+                   HeightRequest="120"/>
             <Label Text="No Bookmarked Verses"
                    Style="{StaticResource SubHeadline}"
                    HorizontalOptions="Center"
@@ -98,14 +109,13 @@
                             
                             <!-- Remove Button -->
                             <Button Grid.Row="0" Grid.Column="1"
-                                    Text="???"
                                     BackgroundColor="Transparent"
-                                    TextColor="Red"
-                                    FontSize="16"
                                     Padding="8"
                                     WidthRequest="40"
                                     HeightRequest="40"
-                                    Clicked="OnRemoveBookmarkClicked"/>
+									ImageSource="delete.png"
+                                    Clicked="OnRemoveBookmarkClicked">
+                            </Button>
                             
                             <!-- Arabic Text -->
                             <Label Grid.Row="1" Grid.ColumnSpan="2"

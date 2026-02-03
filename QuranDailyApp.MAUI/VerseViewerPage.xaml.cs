@@ -53,10 +53,13 @@ public partial class VerseViewerPage : ContentPage
     private async Task UpdateBookmarkButton()
     {
         if (_currentAyah == null) return;
-        
+
         var isBookmarked = await _bookmarkService.IsBookmarkedAsync(_currentAyah);
-        BookmarkButton.Text = isBookmarked ? "🔖" : "🏷️";
-        BookmarkButton.TextColor = isBookmarked ? Colors.Red : Colors.Blue;
+        var imageFile = isBookmarked ? "bookmark.png" : "bookmark_outline.png";
+        var color = isBookmarked ? Colors.Red : Colors.Blue;
+
+        BookmarkButton.ImageSource = ImageSource.FromFile(imageFile);
+        BookmarkButton.TextColor = color;
     }
 
     private async void OnBookmarkClicked(object sender, EventArgs e)
@@ -99,7 +102,7 @@ public partial class VerseViewerPage : ContentPage
         {
             await Share.Default.RequestAsync(new ShareTextRequest
             {
-                Title = "Quran Daily Verse",
+                Title = "Tanzil: Daily Quran",
                 Text = shareText
             });
         }

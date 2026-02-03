@@ -176,8 +176,11 @@ public partial class MainPage : ContentPage
         if (_currentAyah == null) return;
         
         var isBookmarked = await _bookmarkService.IsBookmarkedAsync(_currentAyah);
-        BookmarkButton.Text = isBookmarked ? "🔖" : "🏷️";
-        BookmarkButton.TextColor = isBookmarked ? Colors.Red : Colors.Blue;
+        var imageFile = isBookmarked ? "bookmark.png" : "bookmark_outline.png";
+        var color = isBookmarked ? Colors.Red : Colors.Blue;
+
+        BookmarkButton.ImageSource = ImageSource.FromFile(imageFile);
+        BookmarkButton.TextColor = color;
     }
 
     // Event Handlers
@@ -239,7 +242,7 @@ public partial class MainPage : ContentPage
         {
             await Share.Default.RequestAsync(new ShareTextRequest
             {
-                Title = "Quran Daily Verse",
+                Title = "Tanzil: Daily Quran",
                 Text = shareText
             });
         }

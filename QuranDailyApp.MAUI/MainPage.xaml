@@ -111,29 +111,29 @@
                             <!-- Bookmark Button -->
                             <Button Grid.Column="1" 
                                     x:Name="BookmarkButton"
-                                    Text="🔖"
                                     Clicked="OnBookmarkClicked"
+                                    ImageSource="bookmark_outline.png"
                                     BackgroundColor="Transparent"
-                                    TextColor="{StaticResource Primary}"
                                     BorderColor="{StaticResource BorderColor}"
                                     BorderWidth="1"
                                     WidthRequest="50"
                                     HeightRequest="50"
                                     CornerRadius="25"
-                                    Margin="0,0,10,0"/>
+                                    Margin="0,0,10,0">
+                            </Button>
                             
                             <!-- Share Button -->
                             <Button Grid.Column="2" 
                                     x:Name="ShareButton"
-                                    Text="📤"
                                     Clicked="OnShareClicked"
+                                    ImageSource="share_variant.png"
                                     BackgroundColor="Transparent"
-                                    TextColor="{StaticResource Primary}"
                                     BorderColor="{StaticResource BorderColor}"
                                     BorderWidth="1"
                                     WidthRequest="50"
                                     HeightRequest="50"
-                                    CornerRadius="25"/>
+                                    CornerRadius="25">
+                            </Button>
                         </Grid>
 
                         <!-- Arabic Text -->
@@ -191,24 +191,26 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Button Grid.Column="0"
                     x:Name="PreviousButton" 
-                    Text="◀"
                     Clicked="OnPreviousClicked"
-                    Style="{StaticResource Key=Button}"/>
+                    ImageSource="chevron_left.png"
+                    Style="{StaticResource Key=Button}">
+            </Button>
             
             <Button Grid.Column="1"
                     x:Name="RandomButton"
                     Text="Random" 
                     Clicked="OnRandomClicked"
                     Style="{StaticResource Key=Button}"/>
-            
+
             <Button Grid.Column="2"
                     x:Name="NextButton"
-                    Text="▶"
                     Clicked="OnNextClicked" 
-                    Style="{StaticResource Key=Button}"/>
+                    ImageSource="chevron_right.png"
+                    Style="{StaticResource Key=Button}">
+            </Button>
         </Grid>
         
     </Grid>
