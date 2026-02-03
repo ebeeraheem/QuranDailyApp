@@ -1,6 +1,7 @@
 ﻿using QuranDailyApp.Core.Models;
 using QuranDailyApp.Core.Services;
 using QuranDailyApp.Core.Interfaces;
+using System.Diagnostics;
 
 namespace QuranDailyApp.MAUI;
 
@@ -49,8 +50,8 @@ public partial class MainPage : ContentPage
                     await _notificationService.ScheduleDailyNotificationAsync(defaultTime, true);
                     
                     // Show a friendly message to user
-                    await DisplayAlertAsync("Daily Reminders Set! 🔔", 
-                        "You'll receive daily Quran verse notifications at 8:00 AM.\n\nYou can change the time or turn them off in Settings.", 
+                    await DisplayAlertAsync("Daily Reminders Set!", 
+                        "You'll receive daily Quran verse notifications at 8:00 AM.\n\nYou can change the time in Settings.", 
                         "Got it!");
                 }
                 else
@@ -132,7 +133,8 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlertAsync("Error", $"Failed to load verse: {ex.Message}", "OK");
+            Debug.WriteLine($"Failed to load verse: {ex.Message}");
+            await _notificationService.ShowToastAsync("Error loading verse. Please try again.");
         }
         finally
         {
@@ -220,7 +222,8 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlertAsync("Error", $"Could not bookmark verse: {ex.Message}", "OK");
+            Debug.WriteLine($"Could not bookmark verse: {ex.Message}");
+            await _notificationService.ShowToastAsync("Error bookmarking verse. Please try again.");
         }
     }
 
@@ -245,11 +248,12 @@ public partial class MainPage : ContentPage
             try
             {
                 await Clipboard.Default.SetTextAsync(shareText);
-                await DisplayAlertAsync("Copied", "Verse copied to clipboard!", "OK");
+                await _notificationService.ShowToastAsync("Verse copied to clipboard!");
             }
             catch (Exception ex)
             {
-                await DisplayAlertAsync("Error", $"Unable to share verse: {ex.Message}", "OK");
+                Debug.WriteLine($"Unable to share verse: {ex.Message}");
+                await _notificationService.ShowToastAsync("Unable to share verse. Please try again.");
             }
         }
     }

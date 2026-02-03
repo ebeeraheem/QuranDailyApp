@@ -147,7 +147,7 @@
                 </Border.StrokeShape>
                 
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Quran Daily" 
+                    <Label Text="Tanzil: Daily Quran" 
                            FontAttributes="Bold"
                            FontSize="18"/>
                     <Label Text="Version 1.0.0" 

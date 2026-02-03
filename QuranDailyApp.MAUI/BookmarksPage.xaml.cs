@@ -1,17 +1,20 @@
 using QuranDailyApp.Core.Interfaces;
 using QuranDailyApp.Core.Models;
+using System.Diagnostics;
 
 namespace QuranDailyApp.MAUI;
 
 public partial class BookmarksPage : ContentPage
 {
     private readonly IBookmarkService _bookmarkService;
+    private readonly INotificationService _notificationService;
     private List<AyahDisplay> _bookmarks = [];
 
-    public BookmarksPage(IBookmarkService bookmarkService)
+    public BookmarksPage(IBookmarkService bookmarkService, INotificationService notificationService)
     {
         InitializeComponent();
         _bookmarkService = bookmarkService;
+        _notificationService = notificationService;
     }
 
     protected override async void OnAppearing()
@@ -42,7 +45,8 @@ public partial class BookmarksPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlertAsync("Error", $"Failed to load bookmarks: {ex.Message}", "OK");
+            Debug.WriteLine($"Error loading bookmarks: {ex.Message}");
+            await _notificationService.ShowToastAsync("Error loading bookmarks.");
             EmptyStateLayout.IsVisible = true;
         }
         finally
@@ -83,7 +87,8 @@ public partial class BookmarksPage : ContentPage
             }
             catch (Exception ex)
             {
-                await DisplayAlertAsync("Error", $"Failed to remove bookmark: {ex.Message}", "OK");
+                Debug.WriteLine($"Error removing bookmark: {ex.Message}");
+                await _notificationService.ShowToastAsync("Error removing bookmark.");
             }
         }
     }

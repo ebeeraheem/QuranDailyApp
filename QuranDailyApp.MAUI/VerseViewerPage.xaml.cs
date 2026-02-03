@@ -20,6 +20,8 @@ public partial class VerseViewerPage : ContentPage
 
     public AyahDisplay Ayah
     {
+        get => _currentAyah ?? new AyahDisplay();
+
         set
         {
             _currentAyah = value;
@@ -73,7 +75,7 @@ public partial class VerseViewerPage : ContentPage
             else
             {
                 await _bookmarkService.BookmarkVerseAsync(_currentAyah);
-                await _notificationService.ShowSuccessToastAsync("Verse bookmarked! 🔖");
+                await _notificationService.ShowSuccessToastAsync("Verse bookmarked!");
             }
 
             await UpdateBookmarkButton();

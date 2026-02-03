@@ -48,7 +48,7 @@ public partial class MauiNotificationService(QuranService quranService) : INotif
             var notification = new NotificationRequest
             {
                 NotificationId = DAILY_NOTIFICATION_ID,
-                Title = "Quran Daily 📖",
+                Title = "Tanzil: Daily Quran",
                 Subtitle = $"{todaysVerse.SurahName} ({todaysVerse.SurahNumber}:{(int)todaysVerse.AyahNumber})",
                 Description = GetTruncatedTranslation(todaysVerse.Translation),
                 BadgeNumber = 1,
@@ -135,7 +135,7 @@ public partial class MauiNotificationService(QuranService quranService) : INotif
     private static partial Regex FootnoteNumbersRegex();
 
     // Toast notification methods
-    public static async Task ShowToastAsync(string message)
+    public async Task ShowToastAsync(string message)
     {
         try
         {
@@ -148,7 +148,7 @@ public partial class MauiNotificationService(QuranService quranService) : INotif
         }
     }
 
-    public static async Task ShowSuccessToastAsync(string message)
+    public async Task ShowSuccessToastAsync(string message)
     {
         try
         {
@@ -161,7 +161,7 @@ public partial class MauiNotificationService(QuranService quranService) : INotif
         }
     }
 
-    public static async Task ShowErrorToastAsync(string message)
+    public async Task ShowErrorToastAsync(string message)
     {
         try
         {

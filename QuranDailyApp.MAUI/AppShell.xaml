@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:QuranDailyApp.MAUI"
-    Title="Quran Daily"
+    Title="Tanzil: Daily Quran"
     FlyoutBehavior="Flyout">
 
     <!-- Flyout Header -->
@@ -13,7 +13,7 @@
               HeightRequest="200"
               Padding="20">
             <VerticalStackLayout VerticalOptions="End">
-                <Label Text="Quran Daily" 
+                <Label Text="Tanzil: Daily Quran" 
                        TextColor="White"
                        FontSize="24"
                        FontAttributes="Bold"/>

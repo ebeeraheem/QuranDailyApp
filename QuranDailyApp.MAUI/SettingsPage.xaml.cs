@@ -110,17 +110,17 @@ public partial class SettingsPage : ContentPage
         if (radioButton == LightThemeRadio)
         {
             theme = "Light";
-            Application.Current!.UserAppTheme = AppTheme.Light;
+            Application.Current?.UserAppTheme = AppTheme.Light;
         }
         else if (radioButton == DarkThemeRadio)
         {
             theme = "Dark";
-            Application.Current!.UserAppTheme = AppTheme.Dark;
+            Application.Current?.UserAppTheme = AppTheme.Dark;
         }
         else if (radioButton == SystemThemeRadio)
         {
             theme = "System";
-            Application.Current!.UserAppTheme = AppTheme.Unspecified;
+            Application.Current?.UserAppTheme = AppTheme.Unspecified;
         }
 
         Preferences.Set("Theme", theme);

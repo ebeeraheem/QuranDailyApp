@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="QuranDailyApp.MAUI.MainPage"
-             Title="Quran Daily"
+             Title="Tanzil: Daily Quran"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundPrimary}, Dark={StaticResource BackgroundPrimaryDark}}">
 
     <Shell.FlyoutBehavior>
