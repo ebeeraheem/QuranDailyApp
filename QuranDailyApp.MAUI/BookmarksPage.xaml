@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="QuranDailyApp.MAUI.BookmarksPage"
+             Title="Bookmarked Verses"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundPrimary}, Dark={StaticResource BackgroundPrimaryDark}}">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+            StatusBarStyle="{AppThemeBinding Light=Light, Dark=Dark}" />
+    </ContentPage.Behaviors>
+
+    <Grid>
+        <!-- Loading Indicator -->
+        <ActivityIndicator x:Name="LoadingIndicator" 
+                          IsVisible="True" 
+                          IsRunning="True"
+                          Color="{StaticResource Primary}"
+                          VerticalOptions="Center"
+                          HorizontalOptions="Center"/>
+
+        <!-- Empty State -->
+        <VerticalStackLayout x:Name="EmptyStateLayout"
+                            IsVisible="False" 
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Padding="40">
+            <Label Text="??" 
+                   FontSize="48" 
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20"/>
+            <Label Text="No Bookmarked Verses"
+                   Style="{StaticResource SubHeadline}"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10"/>
+            <Label Text="Start bookmarking your favorite verses from the daily verse page"
+                   Style="{StaticResource MutedText}"
+                   HorizontalTextAlignment="Center"
+                   LineBreakMode="WordWrap"/>
+            <Button Text="Go to Daily Verse"
+                    Clicked="OnGoToDailyVerseClicked"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    Margin="0,20,0,0"/>
+        </VerticalStackLayout>
+
+        <!-- Bookmarks List -->
+        <CollectionView x:Name="BookmarksCollectionView"
+                       IsVisible="False"
+                       BackgroundColor="Transparent"
+                       SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundCard}, Dark={StaticResource BackgroundCardDark}}"
+                            Stroke="{StaticResource BorderColor}"
+                            StrokeThickness="1"
+                            Padding="16"
+                            Margin="16,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12"/>
+                        </Border.StrokeShape>
+                        
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBookmarkItemTapped" />
+                        </Border.GestureRecognizers>
+                        
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Surah Info -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                                    BackgroundColor="{StaticResource Primary}"
+                                    Padding="8,4"
+                                    HorizontalOptions="Start">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6"/>
+                                </Border.StrokeShape>
+                                <Label Text="{Binding SurahName}"
+                                       TextColor="White"
+                                       FontAttributes="Bold"
+                                       FontSize="12"/>
+                            </Border>
+                            
+                            <!-- Remove Button -->
+                            <Button Grid.Row="0" Grid.Column="1"
+                                    Text="???"
+                                    BackgroundColor="Transparent"
+                                    TextColor="Red"
+                                    FontSize="16"
+                                    Padding="8"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    Clicked="OnRemoveBookmarkClicked"/>
+                            
+                            <!-- Arabic Text -->
+                            <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                   Text="{Binding Arabic}"
+                                   Style="{StaticResource ArabicText}"
+                                   FontSize="18"
+                                   HorizontalTextAlignment="Center"
+                                   FlowDirection="RightToLeft"
+                                   LineBreakMode="WordWrap"
+                                   MaxLines="3"
+                                   Margin="0,10,0,10"/>
+                            
+                            <!-- Translation -->
+                            <Label Grid.Row="2" Grid.ColumnSpan="2"
+                                   Text="{Binding Translation}"
+                                   HorizontalTextAlignment="Center"
+                                   LineBreakMode="WordWrap"
+                                   MaxLines="2"
+                                   FontSize="14"
+                                   Margin="0,0,0,10"/>
+                            
+                            <!-- Verse Reference -->
+                            <Label Grid.Row="3" Grid.ColumnSpan="2"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="12"
+                                   Style="{StaticResource MutedText}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Verse "/>
+                                        <Span Text="{Binding SurahNumber}"/>
+                                        <Span Text=":"/>
+                                        <Span Text="{Binding AyahNumber, StringFormat='{0:F0}'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

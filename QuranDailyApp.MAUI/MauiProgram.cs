@@ -26,18 +26,17 @@ public static class MauiProgram
         // Add caching services
         builder.Services.AddMemoryCache();
 
-        // Add file service for MAUI
+        // Add custom services
         builder.Services.AddScoped<IFileService, MauiFileService>();
-
-        // Add notification service
         builder.Services.AddSingleton<INotificationService, MauiNotificationService>();
-
-        // Add core services
+        builder.Services.AddSingleton<IBookmarkService, MauiBookmarkService>();
         builder.Services.AddScoped<QuranService>();
 
         // Register pages
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddSingleton<SettingsPage>();
+        builder.Services.AddTransient<BookmarksPage>();
+        builder.Services.AddTransient<VerseViewerPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

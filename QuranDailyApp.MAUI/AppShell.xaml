@@ -9,7 +9,7 @@
 
     <!-- Flyout Header -->
     <Shell.FlyoutHeader>
-        <Grid BackgroundColor="{StaticResource PrimaryDark}" 
+        <Grid BackgroundColor="{StaticResource BackgroundPrimaryDark}"
               HeightRequest="200"
               Padding="20">
             <VerticalStackLayout VerticalOptions="End">
@@ -32,11 +32,23 @@
                       Route="home"/>
     </FlyoutItem>
     
+    <FlyoutItem Title="Bookmarked Verses" 
+                Icon="bookmark.png">
+        <ShellContent ContentTemplate="{DataTemplate local:BookmarksPage}" 
+                      Route="bookmarks"/>
+    </FlyoutItem>
+    
     <FlyoutItem Title="Settings" 
                 Icon="settings.png">
         <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" 
                       Route="settings"/>
     </FlyoutItem>
+
+    <!-- Additional Routes -->
+    <ShellContent x:Name="VerseViewerRoute" 
+                  ContentTemplate="{DataTemplate local:VerseViewerPage}"
+                  Route="verse"
+                  FlyoutItemIsVisible="False"/>
 
     <!-- Flyout Footer -->
     <Shell.FlyoutFooter>

@@ -82,6 +82,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             
                             <!-- Surah Badge -->
@@ -107,8 +108,22 @@
                                 </VerticalStackLayout>
                             </Border>
                             
-                            <!-- Share Button -->
+                            <!-- Bookmark Button -->
                             <Button Grid.Column="1" 
+                                    x:Name="BookmarkButton"
+                                    Text="🔖"
+                                    Clicked="OnBookmarkClicked"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource Primary}"
+                                    BorderColor="{StaticResource BorderColor}"
+                                    BorderWidth="1"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    CornerRadius="25"
+                                    Margin="0,0,10,0"/>
+                            
+                            <!-- Share Button -->
+                            <Button Grid.Column="2" 
                                     x:Name="ShareButton"
                                     Text="📤"
                                     Clicked="OnShareClicked"

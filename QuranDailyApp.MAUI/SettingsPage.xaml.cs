@@ -126,7 +126,7 @@ public partial class SettingsPage : ContentPage
         Preferences.Set("Theme", theme);
     }
 
-    private async void OnEbeeSolutionsLinkTapped(object sender, TappedEventArgs e)
+    private static async void OnEbeeSolutionsLinkTapped(object sender, TappedEventArgs e)
     {
         var uri = new Uri("https://ebeesolutions.com");
         await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);

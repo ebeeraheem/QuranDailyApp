@@ -8,14 +8,16 @@ public partial class MainPage : ContentPage
 {
     private readonly QuranService _quranService;
     private readonly INotificationService _notificationService;
+    private readonly IBookmarkService _bookmarkService;
     private AyahDisplay? _currentAyah;
     private bool _isLoading = false;
 
-    public MainPage(QuranService quranService, INotificationService notificationService)
+    public MainPage(QuranService quranService, INotificationService notificationService, IBookmarkService bookmarkService)
     {
         InitializeComponent();
         _quranService = quranService;
         _notificationService = notificationService;
+        _bookmarkService = bookmarkService;
         
         Loaded += OnPageLoaded;
     }
@@ -145,7 +147,7 @@ public partial class MainPage : ContentPage
         }
     }
 
-    private void UpdateVerseDisplay()
+    private async void UpdateVerseDisplay()
     {
         if (_currentAyah == null) return;
 
@@ -156,12 +158,24 @@ public partial class MainPage : ContentPage
         TransliterationLabel.Text = _currentAyah.Transliteration;
         TranslationLabel.Text = _currentAyah.Translation;
 
+        // Update bookmark button appearance
+        await UpdateBookmarkButton();
+
         // Show verse card and navigation
         VerseCard.IsVisible = true;
         NavigationGrid.IsVisible = true;
 
         // Hide transliteration if empty
         TransliterationLabel.IsVisible = !string.IsNullOrWhiteSpace(_currentAyah.Transliteration);
+    }
+
+    private async Task UpdateBookmarkButton()
+    {
+        if (_currentAyah == null) return;
+        
+        var isBookmarked = await _bookmarkService.IsBookmarkedAsync(_currentAyah);
+        BookmarkButton.Text = isBookmarked ? "🔖" : "🏷️";
+        BookmarkButton.TextColor = isBookmarked ? Colors.Red : Colors.Blue;
     }
 
     // Event Handlers
@@ -183,6 +197,31 @@ public partial class MainPage : ContentPage
     private async void OnPreviousClicked(object sender, EventArgs e)
     {
         await LoadPreviousAyah();
+    }
+
+    private async void OnBookmarkClicked(object sender, EventArgs e)
+    {
+        if (_currentAyah == null) return;
+
+        try
+        {
+            var isBookmarked = await _bookmarkService.IsBookmarkedAsync(_currentAyah);
+            
+            if (isBookmarked)
+            {
+                await _bookmarkService.RemoveBookmarkAsync(_currentAyah);
+            }
+            else
+            {
+                await _bookmarkService.BookmarkVerseAsync(_currentAyah);
+            }
+
+            await UpdateBookmarkButton();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlertAsync("Error", $"Could not bookmark verse: {ex.Message}", "OK");
+        }
     }
 
     private async void OnShareClicked(object sender, EventArgs e)

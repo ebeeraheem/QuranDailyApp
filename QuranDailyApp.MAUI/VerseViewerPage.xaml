@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="QuranDailyApp.MAUI.VerseViewerPage"
+             Title="Verse"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundPrimary}, Dark={StaticResource BackgroundPrimaryDark}}">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+            StatusBarStyle="{AppThemeBinding Light=Light, Dark=Dark}" />
+    </ContentPage.Behaviors>
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="20">
+            
+            <!-- Verse Card -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundCard}, Dark={StaticResource BackgroundCardDark}}"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeThickness="1"
+                    Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16"/>
+                </Border.StrokeShape>
+                
+                <VerticalStackLayout Spacing="20">
+                    
+                    <!-- Verse Header -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Surah Badge -->
+                        <Border Grid.Column="0"
+                                BackgroundColor="{StaticResource Primary}"
+                                Padding="12,8"
+                                HorizontalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <VerticalStackLayout>
+                                <Label x:Name="SurahNameLabel" 
+                                       TextColor="White"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="SurahReferenceLabel" 
+                                       TextColor="White"
+                                       FontSize="12"
+                                       Opacity="0.9"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        
+                        <!-- Bookmark Button -->
+                        <Button Grid.Column="1" 
+                                x:Name="BookmarkButton"
+                                Text="??"
+                                Clicked="OnBookmarkClicked"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource Primary}"
+                                BorderColor="{StaticResource BorderColor}"
+                                BorderWidth="1"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                CornerRadius="25"
+                                Margin="0,0,10,0"/>
+                        
+                        <!-- Share Button -->
+                        <Button Grid.Column="2" 
+                                x:Name="ShareButton"
+                                Text="??"
+                                Clicked="OnShareClicked"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource Primary}"
+                                BorderColor="{StaticResource BorderColor}"
+                                BorderWidth="1"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                CornerRadius="25"/>
+                    </Grid>
+
+                    <!-- Arabic Text -->
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundSecondary}, Dark={StaticResource BackgroundSecondaryDark}}"
+                            Padding="20">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12"/>
+                        </Border.StrokeShape>
+                        <Label x:Name="ArabicLabel" 
+                               Style="{StaticResource ArabicText}"
+                               HorizontalTextAlignment="Center"
+                               FlowDirection="RightToLeft"/>
+                    </Border>
+
+                    <!-- Transliteration -->
+                    <Label x:Name="TransliterationLabel" 
+                           Style="{StaticResource TransliterationText}"
+                           HorizontalTextAlignment="Center"/>
+
+                    <!-- Translation -->
+                    <VerticalStackLayout>
+                        <Label Text="Sahih International" 
+                               Style="{StaticResource MutedText}"
+                               HorizontalTextAlignment="Center"
+                               FontAttributes="Bold"/>
+                        <Label x:Name="TranslationLabel" 
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

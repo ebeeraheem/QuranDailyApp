@@ -15,6 +15,12 @@ builder.Services.AddMemoryCache();
 // Add file service for Blazor
 builder.Services.AddScoped<IFileService, BlazorFileService>();
 
+// Add notification service for Blazor (no-op implementation)
+builder.Services.AddScoped<INotificationService, BlazorNotificationService>();
+
+// Add bookmark service for Blazor (no-op implementation)  
+builder.Services.AddScoped<IBookmarkService, BlazorBookmarkService>();
+
 builder.Services.AddScoped<QuranService>();
 
 await builder.Build().RunAsync();
