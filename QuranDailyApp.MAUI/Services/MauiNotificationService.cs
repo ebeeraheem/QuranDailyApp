@@ -1,4 +1,6 @@
-﻿using Plugin.LocalNotification;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using Plugin.LocalNotification;
 using QuranDailyApp.Core.Services;
 using System.Diagnostics;
 using System.Globalization;
@@ -131,4 +133,44 @@ public partial class MauiNotificationService(QuranService quranService) : INotif
 
     [GeneratedRegex(@"\d+")]
     private static partial Regex FootnoteNumbersRegex();
+
+    // Toast notification methods
+    public static async Task ShowToastAsync(string message)
+    {
+        try
+        {
+            var toast = Toast.Make(message, ToastDuration.Long);
+            await toast.Show();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error showing toast: {ex.Message}");
+        }
+    }
+
+    public static async Task ShowSuccessToastAsync(string message)
+    {
+        try
+        {
+            var toast = Toast.Make($"{message}", ToastDuration.Long);
+            await toast.Show();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error showing success toast: {ex.Message}");
+        }
+    }
+
+    public static async Task ShowErrorToastAsync(string message)
+    {
+        try
+        {
+            var toast = Toast.Make($"{message}", ToastDuration.Long);
+            await toast.Show();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error showing error toast: {ex.Message}");
+        }
+    }
 }

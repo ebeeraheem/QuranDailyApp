@@ -20,4 +20,11 @@ public class BlazorNotificationService : INotificationService
     public void SetNotificationEnabled(bool enabled) { }
     
     public bool IsFirstLaunch() => false;
+
+    // Toast methods - no-op implementations for Blazor
+    public static Task ShowToastAsync(string message) => Task.CompletedTask;
+
+    public static Task ShowSuccessToastAsync(string message) => Task.CompletedTask;
+
+    public static Task ShowErrorToastAsync(string message) => Task.CompletedTask;
 }

@@ -52,7 +52,7 @@ public partial class SettingsPage : ContentPage
                     "OK");
                 
                 NotificationSwitch.IsToggled = false;
-                PermissionStatusLabel.Text = "?? Notification permission required. Please enable in device settings.";
+                PermissionStatusLabel.Text = "Notification permission required. Please enable in device settings.";
                 PermissionStatusLabel.IsVisible = true;
                 return;
             }

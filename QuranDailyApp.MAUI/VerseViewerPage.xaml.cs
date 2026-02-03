@@ -1,5 +1,6 @@
 ﻿using QuranDailyApp.Core.Interfaces;
 using QuranDailyApp.Core.Models;
+using System.Diagnostics;
 
 namespace QuranDailyApp.MAUI;
 
@@ -7,12 +8,14 @@ namespace QuranDailyApp.MAUI;
 public partial class VerseViewerPage : ContentPage
 {
     private readonly IBookmarkService _bookmarkService;
+    private readonly INotificationService _notificationService;
     private AyahDisplay? _currentAyah;
 
-    public VerseViewerPage(IBookmarkService bookmarkService)
+    public VerseViewerPage(IBookmarkService bookmarkService, INotificationService notificationService)
     {
         InitializeComponent();
         _bookmarkService = bookmarkService;
+        _notificationService = notificationService;
     }
 
     public AyahDisplay Ayah
@@ -65,19 +68,20 @@ public partial class VerseViewerPage : ContentPage
             if (isBookmarked)
             {
                 await _bookmarkService.RemoveBookmarkAsync(_currentAyah);
-                await DisplayAlertAsync("Bookmark Removed", "This verse has been removed from your bookmarks.", "OK");
+                await _notificationService.ShowToastAsync("Bookmark removed");
             }
             else
             {
                 await _bookmarkService.BookmarkVerseAsync(_currentAyah);
-                await DisplayAlertAsync("Verse Bookmarked! 🔖", "This verse has been added to your bookmarks.", "Great!");
+                await _notificationService.ShowSuccessToastAsync("Verse bookmarked! 🔖");
             }
 
             await UpdateBookmarkButton();
         }
         catch (Exception ex)
         {
-            await DisplayAlertAsync("Error", $"Could not bookmark verse: {ex.Message}", "OK");
+            Debug.WriteLine($"Could not bookmark verse: {ex.Message}");
+            await _notificationService.ShowErrorToastAsync("Could not bookmark verse. Please try again.");
         }
     }
 
@@ -102,11 +106,12 @@ public partial class VerseViewerPage : ContentPage
             try
             {
                 await Clipboard.Default.SetTextAsync(shareText);
-                await DisplayAlertAsync("Copied", "Verse copied to clipboard!", "OK");
+                await _notificationService.ShowSuccessToastAsync("Verse copied to clipboard!");
             }
             catch (Exception ex)
             {
-                await DisplayAlertAsync("Error", $"Unable to share verse: {ex.Message}", "OK");
+                Debug.WriteLine($"Sharing failed: {ex.Message}");
+                await _notificationService.ShowErrorToastAsync("Unable to share verse. Please try again.");
             }
         }
     }

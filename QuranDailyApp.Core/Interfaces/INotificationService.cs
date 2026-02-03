@@ -10,4 +10,9 @@ public interface INotificationService
     void SetNotificationTime(TimeSpan time);
     void SetNotificationEnabled(bool enabled);
     bool IsFirstLaunch();
+    
+    // Toast notification methods
+    Task ShowToastAsync(string message);
+    Task ShowSuccessToastAsync(string message);
+    Task ShowErrorToastAsync(string message);
 }
