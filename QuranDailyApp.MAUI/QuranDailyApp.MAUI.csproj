@@ -38,6 +38,39 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
 
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041.0|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+  <AndroidLinkTool>r8</AndroidLinkTool>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-maccatalyst|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041.0|AnyCPU'">
+  <ApplicationTitle>Tanzil - Daily Quran</ApplicationTitle>
+</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\tanzil_logo.png" Color="#ffffff" />
