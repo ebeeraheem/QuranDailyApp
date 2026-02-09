@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\logo_green.svg" Color="#ffffff" />
+		<MauiIcon Include="Resources\AppIcon\tanzil_logo.png" Color="#ffffff" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\logo_white.svg" Color="#2c5530" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\logo_white.svg" Color="#2c5530" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
