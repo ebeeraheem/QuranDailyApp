@@ -48,11 +48,6 @@ public partial class MainPage : ContentPage
                     // Set up default 8 AM daily notifications
                     var defaultTime = new TimeSpan(8, 0, 0);
                     await _notificationService.ScheduleDailyNotificationAsync(defaultTime, true);
-                    
-                    // Show a friendly message to user
-                    await DisplayAlertAsync("Daily Reminders Set!", 
-                        "You'll receive daily Quran verse notifications at 8:00 AM.\n\nYou can change the time in Settings.", 
-                        "Got it!");
                 }
                 else
                 {

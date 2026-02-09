@@ -74,9 +74,9 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="16"/>
                     </Border.StrokeShape>
-                    
+
                     <VerticalStackLayout Spacing="20">
-                        
+
                         <!-- Verse Header -->
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -84,7 +84,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <!-- Surah Badge -->
                             <Border Grid.Column="0"
                                     BackgroundColor="{StaticResource Primary}"
@@ -107,7 +107,7 @@
                                            HorizontalOptions="Center"/>
                                 </VerticalStackLayout>
                             </Border>
-                            
+
                             <!-- Bookmark Button -->
                             <Button Grid.Column="1" 
                                     x:Name="BookmarkButton"
@@ -121,7 +121,7 @@
                                     CornerRadius="25"
                                     Margin="0,0,10,0">
                             </Button>
-                            
+
                             <!-- Share Button -->
                             <Button Grid.Column="2" 
                                     x:Name="ShareButton"
@@ -157,24 +157,14 @@
 
                         <!-- Translation -->
                         <VerticalStackLayout>
-                            <Label Text="Sahih International" 
-                                   Style="{StaticResource MutedText}"
-                                   HorizontalTextAlignment="Center"
-                                   FontAttributes="Bold"/>
                             <Label x:Name="TranslationLabel" 
                                    Text="In the Name of Allah, the All-beneficent, the All-merciful."
+                                   FontSize="18"
                                    HorizontalTextAlignment="Center"
                                    LineBreakMode="WordWrap"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
-
-                <!-- Footer -->
-                <Label Text="May Allah bless you with guidance and peace"
-                       Style="{StaticResource MutedText}"
-                       HorizontalTextAlignment="Center"
-                       FontAttributes="Italic"
-                       Margin="0,40,0,20"/>
 
             </VerticalStackLayout>
         </ScrollView>

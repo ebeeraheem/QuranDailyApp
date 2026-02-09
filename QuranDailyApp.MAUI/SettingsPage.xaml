@@ -161,7 +161,7 @@
                                 Style="{StaticResource MutedText}"/>
                         <Label Text="Ebee Solutions" 
                                Style="{StaticResource MutedText}"
-                               TextColor="{StaticResource Primary}"
+                               TextColor="{StaticResource PrimaryDark}"
                                TextDecorations="Underline">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnEbeeSolutionsLinkTapped" />
