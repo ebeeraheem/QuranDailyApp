@@ -28,19 +28,22 @@
 
     <!-- Flyout Items -->
     <FlyoutItem Title="Daily Verse" 
-                Icon="home.png">
+                Icon="home.png"
+                Style="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
         <ShellContent ContentTemplate="{DataTemplate local:MainPage}" 
                       Route="home"/>
     </FlyoutItem>
-    
+
     <FlyoutItem Title="Bookmarked Verses" 
-                Icon="bookmark.png">
+                Icon="bookmark_green.png"
+                Style="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
         <ShellContent ContentTemplate="{DataTemplate local:BookmarksPage}" 
                       Route="bookmarks"/>
     </FlyoutItem>
-    
+
     <FlyoutItem Title="Settings" 
-                Icon="settings.png">
+                Icon="settings.png"
+                Style="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
         <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" 
                       Route="settings"/>
     </FlyoutItem>
