@@ -102,11 +102,8 @@
 
                     <!-- Translation -->
                     <VerticalStackLayout>
-                        <Label Text="Sahih International" 
-                               Style="{StaticResource MutedText}"
-                               HorizontalTextAlignment="Center"
-                               FontAttributes="Bold"/>
                         <Label x:Name="TranslationLabel" 
+                               FontSize="18"
                                HorizontalTextAlignment="Center"
                                LineBreakMode="WordWrap"/>
                     </VerticalStackLayout>

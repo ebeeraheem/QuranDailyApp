@@ -29,8 +29,8 @@ public partial class MainPage : ContentPage
         await InitializeFirstLaunchNotifications();
         
         // Load the daily verse
-        await LoadDailyAyah();
         UpdateDate();
+        await LoadDailyAyah();
     }
 
     private async Task InitializeFirstLaunchNotifications()
@@ -58,7 +58,7 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error initializing notifications: {ex.Message}");
+            Debug.WriteLine($"Error initializing notifications: {ex.Message}");
         }
     }
 
